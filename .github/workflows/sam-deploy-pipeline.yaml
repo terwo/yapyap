@@ -12,8 +12,8 @@ jobs:
       - uses: aws-actions/setup-sam@v1
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_SAM_DEPLOY_ACCESS_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SAM_DEPLOY_ACCESS_KEY }}
+         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
       # sam build
       - run: sam build --use-container --region us-west-2 --config-file ../echo/samconfig.toml --template-file ./echo/template.yaml
@@ -21,4 +21,4 @@ jobs:
 # Run Unit tests- Specify unit tests here
 
 # sam deploy
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name hello-world --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-x1hyuw3b97o4 --capabilities CAPABILITY_IAM --region us-west-2
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name echo --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-x1hyuw3b97o4 --capabilities CAPABILITY_IAM --region us-west-2
