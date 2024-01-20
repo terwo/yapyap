@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - main
+      - backend-sam*
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_SAM_DEPLOY_ACCESS_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SAM_DEPLOY_ACCESS_KEY }}
+          aws-region: us-west-2
+      # sam build
+      - run: sam build --use-container --region us-west-2 --config-file ../echo/samconfig.toml --template-file ./echo/template.yaml
+
+# Run Unit tests- Specify unit tests here
+
+# sam deploy
+      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name hello-world --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-x1hyuw3b97o4 --capabilities CAPABILITY_IAM --region us-west-2
