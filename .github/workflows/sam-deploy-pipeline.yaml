@@ -16,7 +16,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
       # sam build
-      - run: sam build --use-container --region us-west-2 --config-file ../echo/samconfig.toml --template-file ./echo/template.yaml
+      - run: sam build --use-container --region us-west-2 --config-file ../../backend/echo/samconfig.toml --template-file ./backend/echo/template.yaml
 
 # Run Unit tests- Specify unit tests here
 
