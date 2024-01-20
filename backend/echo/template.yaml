@@ -16,7 +16,7 @@ Globals:
     TracingEnabled: true
 Resources:
    
-   ForumFunction:
+  ForumFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: ForumFunction/
@@ -31,6 +31,21 @@ Resources:
             Path: /forum
             Method: get
 
+  SaveYapFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: SaveYapFunction/
+      Handler: save_yap.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Events:
+        Forum:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /save-yap
+            Method: post
+
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -44,3 +59,13 @@ Outputs:
   ForumFunctionIamRole:
     Description: Implicit IAM Role created for Forum function
     Value: !GetAtt ForumFunctionRole.Arn
+
+  SaveYapApi:
+    Description: API Gateway endpoint URL for Prod stage for Save Yap function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/save-yap/"
+  SaveYapFunction:
+    Description: Save Yap Lambda Function ARN
+    Value: !GetAtt SaveYapFunction.Arn
+  SaveYapFunctionIamRole:
+    Description: Implicit IAM Role created for SaveYap function
+    Value: !GetAtt SaveYapFunctionRole.Arn
