@@ -7,13 +7,19 @@ repos:
     rev: v4.4.0
     hooks:
       - id: trailing-whitespace
-        exclude: ".*.patch$"
+        exclude: ".*.patch$ ^Echo/ ^model/"
       - id: check-json
+        exlude: "^Echo/ ^model/"
       - id: check-yaml
+        exlude: "^Echo/ ^model/"
       - id: debug-statements
+        exlude: "^Echo/ ^model/"
       - id: check-merge-conflict
+        exlude: "^Echo/ ^model/"
       - id: end-of-file-fixer
+        exlude: "^Echo/ ^model/"
       - id: pretty-format-json
+        exlude: "^Echo/ ^model/"
         args:
           - "--autofix"
           - "--indent=4"
@@ -22,9 +28,11 @@ repos:
     rev: 23.12.1
     hooks:
       - id: black
+        exlude: "^Echo/ ^model/"
         args:
         - "--line-length=127"
   - repo: https://github.com/PyCQA/flake8
     rev: 7.0.0
     hooks:
       - id: flake8
+        exlude: "^Echo/ ^model/"
