@@ -5,37 +5,75 @@ import tensorflow_hub as hub
 from sklearn.preprocessing import OneHotEncoder
 import numpy as np
 
-def load_dataset(filename):
-    df = pd.read_csv(filename)
-    return df['Text'], df['Emotion']
+# Load datasets
+train_df = pd.read_csv('/content/data_train.csv')
+test_df = pd.read_csv('/content/data_test.csv')
 
-def preprocess_text(texts, tokenizer, max_length):
-    sequences = tokenizer.texts_to_sequences(texts)
-    padded_sequences = pad_sequences(sequences, maxlen=max_length, padding='post')
-    return padded_sequences
-
-def preprocess_labels(labels, encoder):
-    labels = np.array(labels).reshape(-1, 1)
-    one_hot_labels = encoder.fit_transform(labels).toarray()
-    return one_hot_labels
-
-def preprocess_data(text_file, label_encoder, tokenizer, max_length=128):
-    texts, labels = load_dataset(text_file)
-    X = preprocess_text(texts, tokenizer, max_length)
-    y = preprocess_labels(labels, label_encoder)
-    return X, y
-
-# Load MobileBERT
-bert_layer = hub.KerasLayer(
-    "https://www.kaggle.com/models/tensorflow/mobilebert/frameworks/TensorFlow2/variations/en-uncased-l-24-h-128-b-512-a-4-f-4-opt/versions/1",
-    trainable=True)
-
-# Load the pre-trained tokenizer
-preprocess_model_url = f"https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3"
-tokenizer_model = hub.KerasLayer(preprocess_model_url)
+# Tokenize text
+vocab_size = 50000
+tokenizer = Tokenizer(num_words=vocab_size, oov_token='<OOV>')
+tokenizer.fit_on_texts(train_df['Text'])
 
 
-tokenizer = Tokenizer()
-encoder = OneHotEncoder(sparse=False)
-X_train, y_train = preprocess_data('path_to_train_dataset.csv', encoder, tokenizer)
-X_test, y_test = preprocess_data('path_to_test_dataset.csv', encoder, tokenizer)
+# Convert texts to sequences
+X_train = tokenizer.texts_to_sequences(train_df['Text'])
+X_test = tokenizer.texts_to_sequences(test_df['Text'])
+
+# Pad sequences
+max_length = 50
+X_train = pad_sequences(X_train, maxlen=max_length, padding='post')
+X_test = pad_sequences(X_test, maxlen=max_length, padding='post')
+
+# Encode labels
+label_encoder = LabelEncoder()
+y_train = label_encoder.fit_transform(train_df['Emotion'])
+y_test = label_encoder.transform(test_df['Emotion'])
+
+print(f"before: {X_train[:10]}")
+# Split the original training data into new training data and validation data
+X_train_new, X_val, y_train_new, y_val = train_test_split(X_train, y_train, test_size=0.2, random_state=42)
+
+print(f"after: {X_train_new[:10]}")
+X_train[0].shape == X_train_new[0].shape
+
+
+#Train
+
+import tensorflow as tf
+
+embedding_dim = 128
+
+# Define the model
+model = tf.keras.models.Sequential([
+    tf.keras.layers.Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=max_length),
+    tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True)),
+    tf.keras.layers.Bidirectional(tf.keras.layers.GRU(32)),
+    tf.keras.layers.Dense(32, activation='relu'),
+    tf.keras.layers.Dropout(0.4),
+    tf.keras.layers.Dense(5, activation='softmax')  # 5 emotion classes
+])
+
+model.compile(loss='sparse_categorical_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+
+early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=5)
+
+# Train the model
+history =model.fit(X_train_new,
+                   y_train_new,
+                   epochs=10,
+                   validation_data = (X_val, y_val),
+                   callbacks=[early_stopping])
+
+# To predict on the test set
+model_pred_probs = model.predict(X_test)
+
+model_pred_probs.shape, model_pred_probs[:10] # view the first 10
+
+# Convert predictions to labels
+test_pred_labels = model_pred_probs.argmax(axis=1)
+test_pred_labels
+
+
+test_pred_class_names = label_encoder.inverse_transform(test_pred_labels)
