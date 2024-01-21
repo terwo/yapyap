@@ -7,6 +7,12 @@ import neutral from '../../assets/images/resultsscreen/neutral_result.png';
 import sad from '../../assets/images/resultsscreen/sad_result.png';
 import scared from '../../assets/images/resultsscreen/scared_result.png';
 
+const happy_text = "If you’re thriving and you know it clap your hands *clap clap*"
+const angry_text = "You’re in the right place. Take deep breaths and vent away~"
+const neutral_text = "Neutral is good! Take it one day at a time, slowly and steadily."
+const sad_text = "The sun always shines after the storm. Virtual head pats coming your way <3"
+const scared_text = "Fear is just another reason to try harder. You’re stronger than you think! "
+
 const ResultsScreen = ({ navigation }) => {
 
     const finishPost = () => {
