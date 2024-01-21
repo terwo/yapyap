@@ -15,7 +15,23 @@ Globals:
   Api:
     TracingEnabled: true
 Resources:
-   
+  
+  MyLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: layers
+      CompatibleRuntimes:
+        - python3.11
+  
+  LibLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: LibLayer
+      CompatibleRuntimes:
+        - python3.11
+    Metadata:
+      BuildMethod: python3.11
+
   ForumFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -24,6 +40,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -39,27 +58,15 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /post-create
             Method: post
-
-  PostReadFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: PostReadFunction/
-      Handler: post_read.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - x86_64
-      Events:
-        Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /post-read
-            Method: get
 
   ProfileCreateFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -69,6 +76,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -84,6 +94,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -98,7 +111,10 @@ Resources:
       Handler: react.lambda_handler
       Runtime: python3.11
       Architectures:
-      - x86_64
+      - x86_64 
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -114,6 +130,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -125,6 +144,19 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  MyLayer:
+    Description: "Local Packages Layer"
+    Value: !Ref MyLayer
+    Export:
+      Name: !Sub '${AWS::StackName}-MyLayerArn'
+  
+  LibLayer:
+    Description: "Layer containing following libraries: pymongo"
+    Value: !Ref LibLayer
+    Export:
+      Name: !Sub '${AWS::StackName}-LibLayer'
+
+
   ForumApi:
     Description: API Gateway endpoint URL for Prod stage for Forum function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/forum/"
@@ -144,16 +176,6 @@ Outputs:
   CreateFunctionIamRole:
     Description: Implicit IAM Role created for Post Create function
     Value: !GetAtt PostCreateFunctionRole.Arn
-
-  PostReadApi:
-    Description: API Gateway endpoint URL for Prod stage for Post Read function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post-read/"
-  PostReadFunction:
-    Description: Post Read Lambda Function ARN
-    Value: !GetAtt PostReadFunction.Arn
-  PostReadFunctionIamRole:
-    Description: Implicit IAM Role created for Post Read function
-    Value: !GetAtt PostReadFunctionRole.Arn
 
   ProfileCreateApi:
     Description: API Gateway endpoint URL for Prod stage for Profile Create Read function

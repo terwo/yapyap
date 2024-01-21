@@ -1,27 +1,25 @@
 import json
+import os
+
+from mongoDB import add_user
 
 
 def lambda_handler(event, context):
     """
-    This lambda function does the following:
-    * Authenticate the user #TODO
-    * Get the user information from the authentication #TODO
-    * Get the User object from the database #TODO
+    Add a user to the database.
     Returns:
-        Return a User Object
+        Return a User Object.
     """
-
-    event = json.loads(event["body"])
-    print(event)
-
+    event = json.loads(event["body"]) if "body" in event else event 
+    
     # authenticate the user
     if (username := event.get("username")) is None:
         return {
             "statusCode": 400,
             "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"message": "A username must be included"})
+            "body": json.dumps({"message": f"A username must be included {event}"})
         }
-    
+
     if (password := event.get("password")) is None:
         return {
             "statusCode": 400,
@@ -29,14 +27,24 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "A password must be included"})
         }
     
-        
-    # get the user information from the authentication
+    result = add_user(os.environ.get("ATLAS_URI"), username, password)
     
-    # get the user object from the database
-    
-    #! dummy data
-    return {
-        "statusCode": 200,
-        "headers": {"Content-Type": "application/json"},
-        "body": json.dumps({"message": f"User {username} will be created with password {password}"})
-    }
+    if isinstance(result, str):
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"user_id": result})
+            
+        }        
+    if result == -1:
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"}, 
+            "body": json.dumps({"message": f"Username {username} already exists"})
+        }
+    else:
+        return {
+            "statusCode": 500,
+            "headers": {"Content-Type": "application/json"}, 
+            "body": json.dumps({"message": f"Could not create a new user"})
+        }
