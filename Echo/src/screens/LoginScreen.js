@@ -14,6 +14,7 @@ import {
     AccessibilityInfo
 } from "react-native";
 import { useFonts } from 'expo-font';
+import { useUser } from '../context/UserContext.js';
 
 
 import login from '../../assets/images/loginscreen/login.png';
@@ -25,21 +26,30 @@ const LoginScreen = ({ navigation }) => {
         'Nunito': require('../../assets/fonts/Nunito-Regular.ttf'),
     });
 
+    const { setUser } = useUser();
+
+    let userData = null; // keep user as a global var in this function
+
     const handleLogin = async () => {
         try {
             console.log('Attempting to log in'); // Debugging log
             const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username: username, password: password }),
             });
-            const data = await response.json();
-            const user_id = data.user_id;
+            if (response.ok) {
+                userData = await response.json();
+                setUser({ id: userData.user_id, username: username });
+            } else {
+                throw new Error('Login failed');
+            }
+            const id = userData.user_id;
             console.log('Seeing if user has made a post today or not');
             const posted = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({ user_id }),
+                body: JSON.stringify({ user_id: id }),
             });
             console.log('Response:', posted.status)
             if (posted.ok) {
@@ -49,12 +59,6 @@ const LoginScreen = ({ navigation }) => {
                 console.log('User has not made a post today, go to Today page');
                 navigation.navigate('Today');
             }
-            // // if (data.token) {
-            // //     await AsyncStorage.setItem('userToken', data.token);
-            // //     // Navigate to your main app screen
-            // //     navigation.navigate('Today');
-            // // }
-            // navigation.navigate('Today');
         } catch (error) {
             console.error('Login Error:', error);
         }
@@ -62,21 +66,21 @@ const LoginScreen = ({ navigation }) => {
 
     const handleRegister = async () => {
         try {
-            console.log('Attempting to create an account'); // Debugging log
-            // change api endpoint below
+            console.log('Attempting to create an account');
             const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password }),
+                body: JSON.stringify({ username: username, password: password }),
             });
-            const data = await response.json();
+            if (response.ok) {
+                userData = await response.json();
+                setUser({ id: userData.user_id, username: username });
+                navigation.navigate('Today');
+            } else {
+                throw new Error('Account creation failed');
+            }
             console.log('Response:', data);
-            // if (data.token) {
-            //     await AsyncStorage.setItem('userToken', data.token);
-            //     // Navigate to your main app screen
-            //     navigation.navigate('Today');
-            // }
-            navigation.navigate('Today');
+            // navigation.navigate('Today');
         } catch (error) {
             console.error('Account Creation Error:', error);
         }

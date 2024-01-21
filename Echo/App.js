@@ -13,6 +13,7 @@ import {
   AccessibilityInfo
 } from "react-native";
 import * as Font from 'expo-font';
+import { UserProvider } from './src/context/UserContext.js';
 
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -43,18 +44,20 @@ export default function App() {
   }, []);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Today" component={TodayScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="JournalEntry" component={JournalEntryScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Forum" component={ForumScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Loading" component={LoadingScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Results" component={ResultsScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Today" component={TodayScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="JournalEntry" component={JournalEntryScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Forum" component={ForumScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Loading" component={LoadingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Results" component={ResultsScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider >
   );
 }
 
