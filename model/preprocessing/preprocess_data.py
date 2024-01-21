@@ -25,6 +25,15 @@ def preprocess_data(text_file, label_encoder, tokenizer, max_length=128):
     y = preprocess_labels(labels, label_encoder)
     return X, y
 
+# Load MobileBERT
+bert_layer = hub.KerasLayer(
+    "https://www.kaggle.com/models/tensorflow/mobilebert/frameworks/TensorFlow2/variations/en-uncased-l-24-h-128-b-512-a-4-f-4-opt/versions/1",
+    trainable=True)
+
+# Load the pre-trained tokenizer
+preprocess_model_url = f"https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3"
+tokenizer_model = hub.KerasLayer(preprocess_model_url)
+
 
 tokenizer = Tokenizer()
 encoder = OneHotEncoder(sparse=False)
