@@ -1,18 +1,17 @@
 import json
+import os
+
+from mongoDB import add_user
 
 
 def lambda_handler(event, context):
     """
-    This lambda function does the following:
-    * Authenticate the user #TODO
-    * Get the user information from the authentication #TODO
-    * Get the User object from the database #TODO
+    Add a user to the database.
     Returns:
-        Return a User Object
+        Return a User Object.
     """
 
     event = json.loads(event["body"])
-    print(event)
 
     # authenticate the user
     if (username := event.get("username")) is None:
@@ -29,14 +28,18 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "A password must be included"})
         }
     
-        
-    # get the user information from the authentication
-    
-    # get the user object from the database
-    
-    #! dummy data
-    return {
-        "statusCode": 200,
-        "headers": {"Content-Type": "application/json"},
-        "body": json.dumps({"message": f"User {username} will be created with password {password}"})
-    }
+    result = add_user(os.environ.get("ATLAS_URI"), username, password)
+    if result:
+        return {"statusCode": 200}        
+    if result is None:
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"}, 
+            "body": json.dumps({"message": f"Username {username} already exists"})
+        }
+    else:
+        return {
+            "statusCode": 500,
+            "headers": {"Content-Type": "application/json"}, 
+            "body": json.dumps({"message": f"Could not create a new user"})
+        }
