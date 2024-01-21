@@ -2,21 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
 import JournalCard from '../components/JournalCard'; // Assuming this is the correct path
-import happy from '../../assets/images/emotions/happy.png'
+import { useUser } from '../context/UserContext.js';
 
 const ProfileScreen = () => {
-
-    const [user, setUser] = useState(null);
     const [journalEntries, setJournalEntries] = useState([]);
+
+    const { user } = useUser();
+
+    const profile = null; // keep profile as a global var in this function
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read');
-                const data = await response.json();
-                // log what journalEntries were before
-                console.log(await response.text());
-                setUser(data); // Assuming the response has a user object
+                const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?user_id=${user.id}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                profile = await response.json();
+                console.log('Response status:' + response.status);
                 setJournalEntries(data.posts); // Assuming user has journalEntries
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -61,7 +64,7 @@ const ProfileScreen = () => {
                 <Avatar
                     size="large"
                     rounded
-                    source={getAvatarSource(user.avatar)}
+                    source={getAvatarSource(profile.avatar)}
                     containerStyle={styles.avatar}
                 />
                 <Text style={styles.username}>{user.username}</Text>

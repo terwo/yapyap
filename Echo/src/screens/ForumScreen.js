@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Pressable, FlatList, ScrollView, View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import JournalCard from '../components/JournalCard';
+import { useUser } from '../context/UserContext.js'; // Adjust this path to the correct location
+
 
 import icon from '../../assets/images/todayscreen/icon.png';
 import logo from '../../assets/images/todayscreen/logo.png';
@@ -8,6 +10,9 @@ import logo from '../../assets/images/todayscreen/logo.png';
 const ForumScreen = ({ navigation }) => {
     const [forumPosts, setForumPosts] = useState([]);
 
+    const { user } = useUser();
+    console.log('User:', user)
+    console.log('User ID:', user.id)
 
     const goProfile = () => {
         navigation.navigate('Profile')
@@ -20,7 +25,10 @@ const ForumScreen = ({ navigation }) => {
     useEffect(() => {
         const fetchForumPosts = async () => {
             try {
-                const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum');
+                const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${user.id}`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                });
                 const data = await response.json();
                 setForumPosts(data.posts || []); // Set to empty array if posts are undefined
             } catch (error) {

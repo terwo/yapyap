@@ -36,13 +36,13 @@ const LoginScreen = ({ navigation }) => {
             const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?username=${username}&password=${password}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({ username: username, password: password }),
 
             });
             console.log(response.status)
             if (response.ok) {
                 userData = await response.json();
-                setUser({ id: userData.user_id, username: username });
+                // IMPORTANT: user context will NOT have password available
+                setUser({ user_id: userData.user_id, username: userData.username });
             } else {
                 throw new Error('Login failed');
             }
@@ -51,7 +51,6 @@ const LoginScreen = ({ navigation }) => {
             const posted = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${id}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                // body: JSON.stringify({ user_id: id }),
             });
             console.log('Response:', posted.status)
             if (posted.ok) {
