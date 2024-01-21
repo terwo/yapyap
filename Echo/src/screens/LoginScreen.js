@@ -33,11 +33,13 @@ const LoginScreen = ({ navigation }) => {
     const handleLogin = async () => {
         try {
             console.log('Attempting to log in'); // Debugging log
-            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read', {
-                method: 'POST',
+            const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?username=${username}&password=${password}`, {
+                method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: username, password: password }),
+                // body: JSON.stringify({ username: username, password: password }),
+
             });
+            console.log(response.status)
             if (response.ok) {
                 userData = await response.json();
                 setUser({ id: userData.user_id, username: username });
@@ -46,10 +48,10 @@ const LoginScreen = ({ navigation }) => {
             }
             const id = userData.user_id;
             console.log('Seeing if user has made a post today or not');
-            const posted = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum', {
+            const posted = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${id}`, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: id }),
+                // body: JSON.stringify({ user_id: id }),
             });
             console.log('Response:', posted.status)
             if (posted.ok) {
@@ -79,7 +81,7 @@ const LoginScreen = ({ navigation }) => {
             } else {
                 throw new Error('Account creation failed');
             }
-            console.log('Response:', data);
+            // console.log('Response:', data);
             // navigation.navigate('Today');
         } catch (error) {
             console.error('Account Creation Error:', error);
@@ -183,20 +185,6 @@ const styles = StyleSheet.create({
         padding: 20,
         fontFamily: "Nunito",
     },
-    //   button: {
-    //     color: "var(--Black, #271E53)",
-    //     textAlign: "center",
-    //     leadingTrim: "both",
-    //     textEdge: "cap",
-    //     fontVariantNumeric: "lining-nums tabular-nums",
-    //     borderRadius: 30,
-    //     backgroundColor: "#F28D62",
-    //     marginTop: 118,
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     padding: "15px 60px",
-    //     font: "400 22px/127% Nunito, sans-serif ",
-    //   },
 
     inputs: {
         gap: 20,
