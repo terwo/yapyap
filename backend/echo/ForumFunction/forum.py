@@ -23,8 +23,8 @@ def lambda_handler(event, context):
         "data": {
             "posts": [
                 {
-                    "post_id": 1,
-                    "user_id": 12345,
+                    "post_id": "1",
+                    "user_id": "12345",
                     "last_saved_date": "2024-01-20T23:28:19-0800",
                     "journal_entry": "This is a journal entry from user 12345",
                     "sentimental_value": "angry",
@@ -34,8 +34,8 @@ def lambda_handler(event, context):
                     }
                 },
                 {
-                    "post_id": 45,
-                    "user_id": 56789,
+                    "post_id": "45",
+                    "user_id": "56789",
                     "last_saved_date": "2024-01-20T12:28:19-0800",
                     "journal_entry": "This is a journal entry from user 56789",
                     "sentimental_value": "sad",

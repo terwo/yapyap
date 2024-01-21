@@ -31,6 +31,21 @@ Resources:
             Path: /forum
             Method: get
 
+  ProfileFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ProfileFunction/
+      Handler: profile.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Events:
+        Forum:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /profile
+            Method: get
+
   SaveYapFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -59,6 +74,16 @@ Outputs:
   ForumFunctionIamRole:
     Description: Implicit IAM Role created for Forum function
     Value: !GetAtt ForumFunctionRole.Arn
+
+  ProfileApi:
+    Description: API Gateway endpoint URL for Prod stage for Profile function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/profile/"
+  ProfileFunction:
+    Description: Profile Lambda Function ARN
+    Value: !GetAtt ProfileFunction.Arn
+  ProfileFunctionIamRole:
+    Description: Implicit IAM Role created for Profile function
+    Value: !GetAtt ProfileFunctionRole.Arn
 
   SaveYapApi:
     Description: API Gateway endpoint URL for Prod stage for Save Yap function
