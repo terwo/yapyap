@@ -1,4 +1,10 @@
 import json
+import os
+
+from mongoDB import (
+    read_all_posts, 
+    posted_today
+)
 
 
 def lambda_handler(event, context):
@@ -12,8 +18,33 @@ def lambda_handler(event, context):
     Returns:
         Return a list of Post objects in the data field.
     """
-
+    event = json.loads(event["body"]) if "body" in event else event 
+ 
     # authenticate the user
+    if (user_id := event.get("user_id")) is None:
+        return {"statusCode": 401}
+    
+    uri = os.environ.get("ATLAS_URI")
+    
+    if posted_today(uri, user_id):
+        if (posts := read_all_posts(uri)) is None:
+            return {
+                "statusCode": 500,
+                "headers": {"Content-Type": "application/json"},
+                "body": json.dumps({"message": f"No posts found!"})
+            }
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"posts": posts})
+        }
+    
+    return {
+        "statusCode": 401,
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps({"message", "User needs to post today before viewing other posts"})
+    }
+    
     
     # if user has made a post today
 

@@ -1,32 +1,43 @@
 import json
+import os
 
+from mongoDB import create_post
 
 def lambda_handler(event, context):
     """
-    This lambda function does the following:
-    * authenticate the user #TODO
-    * Extract the user_id and journal entry for event[body] #TODO
-    * Get the sentimental value of the journal entry #TODO
-    * Create a Post object #TODO
-    * Save the Post object to the database #TODO
-    
     Returns:
         Return a completion message and the sentimental value for the journal entry.
     """
 
-    # authenticate the user
-
     # extract user_id and journal entry from event[body]    
+    event = json.loads(event["body"]) if "body" in event else event 
+    
+    # authenticate the user
+    if (user_id := event.get("user_id")) is None:
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"message": f"A user_id must be included {event}"})
+        }
 
-    # get the sentimental value
+    if (journal_entry := event.get("journal_entry")) is None:
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"message": "A journal_entry must be included"})
+        }
     
     # create a Post object
+    result = create_post(os.environ.get("ATLAS_URI"), user_id, journal_entry)
+    if result is None:
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"message": "something went wrong..."})
+        }
     
-    # write the Post object to the database
-
-    #! dummy data
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "application/json"},
-        "body": json.dumps({"sentimental_value": "sad"})
+        "body": json.dumps({"sentimental_value": result})
     }

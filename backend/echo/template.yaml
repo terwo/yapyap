@@ -40,6 +40,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -54,7 +57,10 @@ Resources:
       Handler: post_create.lambda_handler
       Runtime: python3.11
       Architectures:
-      - x86_64
+      - x86_6 
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer4
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -70,6 +76,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -120,7 +129,10 @@ Resources:
       Handler: react.lambda_handler
       Runtime: python3.11
       Architectures:
-      - x86_64
+      - x86_64 
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -136,6 +148,9 @@ Resources:
       Runtime: python3.11
       Architectures:
       - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -179,16 +194,6 @@ Outputs:
   CreateFunctionIamRole:
     Description: Implicit IAM Role created for Post Create function
     Value: !GetAtt PostCreateFunctionRole.Arn
-
-  PostReadApi:
-    Description: API Gateway endpoint URL for Prod stage for Post Read function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post-read/"
-  PostReadFunction:
-    Description: Post Read Lambda Function ARN
-    Value: !GetAtt PostReadFunction.Arn
-  PostReadFunctionIamRole:
-    Description: Implicit IAM Role created for Post Read function
-    Value: !GetAtt PostReadFunctionRole.Arn
 
   ProfileCreateApi:
     Description: API Gateway endpoint URL for Prod stage for Profile Create Read function
