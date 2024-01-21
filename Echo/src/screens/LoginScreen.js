@@ -1,129 +1,237 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import {
-  FlatList,
-  ScrollView,
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Button,
-  TextInput,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Linking,
-  AccessibilityInfo
+    FlatList,
+    ScrollView,
+    View,
+    StyleSheet,
+    Image,
+    Text,
+    Button,
+    TextInput,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    Linking,
+    AccessibilityInfo
 } from "react-native";
+import { useFonts } from 'expo-font';
+import { useUser } from '../context/UserContext.js';
+
+
+import login from '../../assets/images/loginscreen/login.png';
 
 const LoginScreen = ({ navigation }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [fontsLoaded, fontError] = useFonts({
+        'Nunito': require('../../assets/fonts/Nunito-Regular.ttf'),
+    });
+
+    const { setUser } = useUser();
+
+    let userData = null; // keep user as a global var in this function
+
+    const loginBut = () => {
+        navigation.navigate('Forum')
+    }
+
+    const createBut = () => {
+        navigation.navigate('Today')
+    }
+
+
+
+    // const handleLogin = async () => {
+    //     try {
+    //         console.log('Attempting to log in'); // Debugging log
+    //         const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?username=${username}&password=${password}`, {
+    //             method: 'GET',
+    //             headers: { 'Content-Type': 'application/json' },
+
+    //         });
+    //         console.log(response.status)
+    //         if (response.ok) {
+    //             userData = await response.json();
+    //             // IMPORTANT: user context will NOT have password available
+    //             setUser({ user_id: userData.user_id, username: userData.username });
+    //         } else {
+    //             throw new Error('Login failed');
+    //         }
+    //         const id = userData.user_id;
+    //         console.log('Seeing if user has made a post today or not');
+    //         const posted = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${id}`, {
+    //             method: 'GET',
+    //             headers: { 'Content-Type': 'application/json' },
+    //         });
+    //         console.log('Response:', posted.status)
+    //         if (posted.ok) {
+    //             console.log('User has made a post today, go to forum page');
+    //             navigation.navigate('Forum');
+    //         } else {
+    //             console.log('User has not made a post today, go to Today page');
+    //             navigation.navigate('Today');
+    //         }
+    //     } catch (error) {
+    //         console.error('Login Error:', error);
+    //     }
+    // };
+
+    // const handleRegister = async () => {
+    //     try {
+    //         console.log('Attempting to create an account');
+    //         const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ username: username, password: password }),
+    //         });
+    //         if (response.ok) {
+    //             userData = await response.json();
+    //             setUser({ id: userData.user_id, username: username });
+    //             navigation.navigate('Today');
+    //         } else {
+    //             throw new Error('Account creation failed');
+    //         }
+    //         // console.log('Response:', data);
+    //         // navigation.navigate('Today');
+    //     } catch (error) {
+    //         console.error('Account Creation Error:', error);
+    //     }
+    // };
+
     return (
         <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>H1 Title</Text>
-        </View>
-        <Button title="Go to Today" onPress={() => navigation.navigate('Today')} />
-        <View style={styles.login}>
-          <Text style={styles.loginText}>H4 Login</Text>
-        </View>
-        <View style={styles.createAccount}>
-          <Text style={styles.createAccountText}>H4 Create Account</Text>
-        </View>
-      </View>
-    );
-  };
 
-// function MyComponent() {
-//     return (
-//       <View style={styles.container}>
-//         <View style={styles.header}>
-//           <Text style={styles.headerText}>H1 Title</Text>
-//         </View>
-//         <Button title="Go to Today" onPress={() => navigation.navigate('Today')} />
-//         <View style={styles.login}>
-//           <Text style={styles.loginText}>H4 Login</Text>
-//         </View>
-//         <View style={styles.createAccount}>
-//           <Text style={styles.createAccountText}>H4 Create Account</Text>
-//         </View>
-//       </View>
-//     );
-//   }
-  
-  const styles = StyleSheet.create({
+            <Image
+                resizeMode="contain"
+                source={login}
+                style={styles.logo}
+            />
+
+            <View style={styles.header}>
+                <Text style={styles.headerText}>yapyap</Text>
+            </View>
+
+            <View style={styles.fulllogin}>
+
+                <View style={styles.inputs}>
+                    <TextInput
+                        placeholder="Username"
+                        value={username}
+                        onChangeText={setUsername}
+                        style={styles.input}
+                    />
+                    <TextInput
+                        placeholder="Password"
+                        value={password}
+                        onChangeText={setPassword}
+                        secureTextEntry
+                        style={styles.input}
+                    />
+                </View>
+
+
+                <View style={styles.buttons}>
+
+                    <TouchableOpacity onPress={loginBut}>
+                        <View style={styles.login}>
+                            <Text style={styles.loginText}>Login</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={createBut}>
+                        <View style={styles.create}>
+                            <Text style={styles.createText}>Create an Account</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                </View>
+
+            </View>
+        </View>
+    );
+};
+
+export default LoginScreen;
+
+const styles = StyleSheet.create({
     container: {
-      backgroundColor: "#FFF",
-      display: "flex",
-      maxWidth: 480,
-      width: "100%",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      marginHorizontal: "auto",
-      paddingVertical: 50,
-      paddingHorizontal: 60,
+        backgroundColor: "#FFF",
+        width: "100%",
+        height: "100%",
+        padding: 50,
+    },
+    logo: {
+        overflow: "hidden",
+        alignSelf: "center",
+        position: "relative",
+        display: "flex",
+        marginTop: 60,
+        width: 165,
+        maxWidth: "100%",
+        flexDirection: "column",
+        aspectRatio: "0.96",
     },
     header: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      marginVertical: 189,
+        color: "black",
+        textAlign: "center",
+        alignSelf: "center",
+        marginTop: 16,
+        whiteSpace: "nowrap",
+        fontFamily: "Nunito",
+        marginBottom: 40,
     },
     headerText: {
-      color: "#271E53", // Changed from CSS custom property to a hard-coded value
-      textAlign: "center",
-      letterSpacing: 1,
-      textTransform: "uppercase",
-      fontWeight: "bold",
-      alignSelf: "center",
-      fontFamily: "Nunito, sans-serif", // Make sure this font is imported or change it to a default font
-      fontSize: 40,
+        fontSize: 40,
+        fontFamily: "Nunito",
     },
+
+    input: {
+        // color: "var(--black, #000C34)",
+        justifyContent: "center",
+        alignItems: "stretch",
+        borderRadius: 20,
+        backgroundColor: "#F8F8F8",
+        marginTop: 12,
+        padding: 20,
+        fontFamily: "Nunito",
+    },
+
+    inputs: {
+        gap: 20,
+    },
+
     login: {
-      color: "black",
-      textAlign: "center",
-      letterSpacing: "1px",
-      fontVariantNumeric: "lining-nums tabular-nums",
-      alignSelf: "center",
-      marginTop: 312,
-      fontFamily: "Nunito, sans-serif",
-      fontSize: 22,
+        color: "black",
+        textAlign: "center",
+        borderRadius: 30,
+        backgroundColor: "#F28D62",
+        alignSelf: "stretch",
+        justifyContent: "center",
+        alignItems: "center",
+        //   margin: "151px 0 7px",
+        paddingTop: 12,
+        paddingBottom: 12,
+        fontSize: 22,
     },
-    loginText: {
-      marginTop: 22,
+
+    create: {
+        color: "black",
+        textAlign: "center",
+        borderRadius: 30,
+        backgroundColor: "#FBFBFB",
+        alignSelf: "stretch",
+        justifyContent: "center",
+        alignItems: "center",
+        //   margin: "151px 0 7px",
+        paddingTop: 12,
+        paddingBottom: 12,
+        fontSize: 22,
     },
-    createAccount: {
-      color: "black",
-      textAlign: "center",
-      letterSpacing: "1px",
-      fontVariantNumeric: "lining-nums tabular-nums",
-      marginTop: 22,
-      whiteSpace: "nowrap",
-      fontFamily: "Nunito, sans-serif",
-      fontSize: 22,
+
+    buttons: {
+        gap: 20,
     },
-    createAccountText: {
-      marginTop: 22,
-    },
-  });
-  
-  export default LoginScreen;
-  // import { StatusBar } from 'expo-status-bar';
-  // import { StyleSheet, Text, View } from 'react-native';
-  
-  // export default function App() {
-  //   return (
-  //     <View style={styles.container}>
-  //       <Text>Open up App.js to start working on your app!</Text>
-  //       <StatusBar style="auto" />
-  //     </View>
-  //   );
-  // }
-  
-  // const styles = StyleSheet.create({
-  //   container: {
-  //     flex: 1,
-  //     backgroundColor: '#fff',
-  //     alignItems: 'center',
-  //     justifyContent: 'center',
-  //   },
-  // });
-  
+
+    fulllogin: {
+        gap: 80,
+    }
+});
