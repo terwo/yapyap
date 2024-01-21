@@ -14,21 +14,57 @@ import {
     AccessibilityInfo
 } from "react-native";
 
+import * as AuthSession from 'expo-auth-session';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import * as Random from 'expo-random';
+
 const LoginScreen = ({ navigation }) => {
-    return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>H1 Title</Text>
-            </View>
-            <Button title="Go to Today" onPress={() => navigation.navigate('Today')} />
-            <View style={styles.login}>
-                <Text style={styles.loginText}>Login</Text>
-            </View>
-            <View style={styles.createAccount}>
-                <Text style={styles.createAccountText}>Create Account</Text>
-            </View>
-        </View>
-    );
+
+
+
+    // // Configurations for Auth0
+    // const auth0ClientId = 'g2B3Ebz84Lqqt8ox7dw2J2wCRxfSaLxC'; // Replace with your Auth0 client ID
+    // const auth0Domain = 'echo-dev.us.auth0.com'; // Replace with your Auth0 domain
+
+    // // Construct the authorization request
+    // const [request, response, promptAsync] = useAuthRequest({
+    //     redirectUri: makeRedirectUri({
+    //         // For development, the scheme will be 'exp'
+    //         native: 'yourapp://redirect', // Replace with your app's redirect scheme
+    //     }),
+    //     clientId: auth0ClientId,
+    //     responseType: 'id_token', // Token response type
+    //     scopes: ['openid', 'profile', 'email'], // Scopes
+    //     extraParams: {
+    //         nonce: getRandomNonce(), // A randomly generated nonce for security
+    //     },
+    // }, {
+    //     authorizationEndpoint: `${auth0Domain}/authorize`, // Auth0 authorization endpoint
+    // });
+
+    // // Random nonce generator
+    // function getRandomNonce() {
+    //     return Random.getRandomBytes(16).toString('hex');
+    // }
+
+    // // Handle the authentication response
+    // React.useEffect(() => {
+    //     if (response?.type === 'success') {
+    //         const { id_token } = response.params;
+    //         // TODO: Handle the ID token (validate, extract user data, etc.)
+    //         // Navigate to the next screen or update the user context
+    //     }
+    // }, [response]);
+
+    // return (
+    //     <View style={styles.container}>
+    //         <View style={styles.header}>
+    //             <Text style={styles.headerText}>H1 Title</Text>
+    //         </View>
+    //         <Button title="Login with Auth0" onPress={() => promptAsync()} disabled={!request} />
+    //         {/* Other UI components */}
+    //     </View>
+    // );
 };
 
 const styles = StyleSheet.create({
@@ -51,13 +87,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     headerText: {
-        color: "#271E53", // Changed from CSS custom property to a hard-coded value
+        color: "#271E53",
         textAlign: "center",
         letterSpacing: 1,
         textTransform: "uppercase",
         fontWeight: "bold",
         alignSelf: "center",
-        fontFamily: "Nunito, sans-serif", // Make sure this font is imported or change it to a default font
+        fontFamily: "Nunito, sans-serif",
         fontSize: 40,
     },
     login: {
