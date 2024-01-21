@@ -106,8 +106,6 @@ Resources:
             Path: /undo-react
             Method: post
 
-
-
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
@@ -167,7 +165,7 @@ Outputs:
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/undo-react/"
   UndoReactFunction:
     Description: Undo React Lambda Function ARN
-    Value: !GetAtt Undo ReactFunction.Arn
+    Value: !GetAtt UndoReactFunction.Arn
   UndoReactFunctionIamRole:
     Description: Implicit IAM Role created for Undo React function
     Value: !GetAtt Undo ReactFunctionRole.Arn
