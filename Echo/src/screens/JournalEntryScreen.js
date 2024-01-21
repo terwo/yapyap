@@ -26,28 +26,32 @@ const JournalEntryScreen = ({ navigation }) => {
     navigation.navigate('Today')
   }
 
+  const callResults = () => {
+    navigation.navigate('Loading')
+  }
+
   // NEED TO SAVE THE TEXT SUBMITTED AND SEND IT TO AI AND RESULTS!!
   const [value, onChangeText] = React.useState('YAP AWAY!!!');
 
-  const callResults = async () => {
-    try {
-      const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/post-create', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ journal_entry: value, user_id: '65ac855974d67649a3ab6993' }),
-      });
-      const data = await response.json();
-      console.log('Response:', data);
-      if (!response.ok) {
-        console.log('Response:', response.status);
-        throw new Error('Network response was not ok');
-      }
-      // Handle successful response, then navigate
-      navigation.navigate('Loading');
-    } catch (error) {
-      console.error('Error posting journal entry:', error);
-    }
-  };
+  // const callResults = async () => {
+  //   try {
+  //     const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/post-create', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ journal_entry: value, user_id: '65ac855974d67649a3ab6993' }),
+  //     });
+  //     const data = await response.json();
+  //     console.log('Response:', data);
+  //     if (!response.ok) {
+  //       console.log('Response:', response.status);
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     // Handle successful response, then navigate
+  //     navigation.navigate('Loading');
+  //   } catch (error) {
+  //     console.error('Error posting journal entry:', error);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>

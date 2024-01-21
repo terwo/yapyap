@@ -30,62 +30,72 @@ const LoginScreen = ({ navigation }) => {
 
     let userData = null; // keep user as a global var in this function
 
-    const handleLogin = async () => {
-        try {
-            console.log('Attempting to log in'); // Debugging log
-            const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?username=${username}&password=${password}`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
+    const loginBut = () => {
+        navigation.navigate('Forum')
+    }
 
-            });
-            console.log(response.status)
-            if (response.ok) {
-                userData = await response.json();
-                // IMPORTANT: user context will NOT have password available
-                setUser({ user_id: userData.user_id, username: userData.username });
-            } else {
-                throw new Error('Login failed');
-            }
-            const id = userData.user_id;
-            console.log('Seeing if user has made a post today or not');
-            const posted = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${id}`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            });
-            console.log('Response:', posted.status)
-            if (posted.ok) {
-                console.log('User has made a post today, go to forum page');
-                navigation.navigate('Forum');
-            } else {
-                console.log('User has not made a post today, go to Today page');
-                navigation.navigate('Today');
-            }
-        } catch (error) {
-            console.error('Login Error:', error);
-        }
-    };
+    const createBut = () => {
+        navigation.navigate('Today')
+    }
 
-    const handleRegister = async () => {
-        try {
-            console.log('Attempting to create an account');
-            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username: username, password: password }),
-            });
-            if (response.ok) {
-                userData = await response.json();
-                setUser({ id: userData.user_id, username: username });
-                navigation.navigate('Today');
-            } else {
-                throw new Error('Account creation failed');
-            }
-            // console.log('Response:', data);
-            // navigation.navigate('Today');
-        } catch (error) {
-            console.error('Account Creation Error:', error);
-        }
-    };
+
+
+    // const handleLogin = async () => {
+    //     try {
+    //         console.log('Attempting to log in'); // Debugging log
+    //         const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?username=${username}&password=${password}`, {
+    //             method: 'GET',
+    //             headers: { 'Content-Type': 'application/json' },
+
+    //         });
+    //         console.log(response.status)
+    //         if (response.ok) {
+    //             userData = await response.json();
+    //             // IMPORTANT: user context will NOT have password available
+    //             setUser({ user_id: userData.user_id, username: userData.username });
+    //         } else {
+    //             throw new Error('Login failed');
+    //         }
+    //         const id = userData.user_id;
+    //         console.log('Seeing if user has made a post today or not');
+    //         const posted = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${id}`, {
+    //             method: 'GET',
+    //             headers: { 'Content-Type': 'application/json' },
+    //         });
+    //         console.log('Response:', posted.status)
+    //         if (posted.ok) {
+    //             console.log('User has made a post today, go to forum page');
+    //             navigation.navigate('Forum');
+    //         } else {
+    //             console.log('User has not made a post today, go to Today page');
+    //             navigation.navigate('Today');
+    //         }
+    //     } catch (error) {
+    //         console.error('Login Error:', error);
+    //     }
+    // };
+
+    // const handleRegister = async () => {
+    //     try {
+    //         console.log('Attempting to create an account');
+    //         const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify({ username: username, password: password }),
+    //         });
+    //         if (response.ok) {
+    //             userData = await response.json();
+    //             setUser({ id: userData.user_id, username: username });
+    //             navigation.navigate('Today');
+    //         } else {
+    //             throw new Error('Account creation failed');
+    //         }
+    //         // console.log('Response:', data);
+    //         // navigation.navigate('Today');
+    //     } catch (error) {
+    //         console.error('Account Creation Error:', error);
+    //     }
+    // };
 
     return (
         <View style={styles.container}>
@@ -121,13 +131,13 @@ const LoginScreen = ({ navigation }) => {
 
                 <View style={styles.buttons}>
 
-                    <TouchableOpacity onPress={handleLogin}>
+                    <TouchableOpacity onPress={loginBut}>
                         <View style={styles.login}>
                             <Text style={styles.loginText}>Login</Text>
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={handleRegister}>
+                    <TouchableOpacity onPress={createBut}>
                         <View style={styles.create}>
                             <Text style={styles.createText}>Create an Account</Text>
                         </View>

@@ -10,10 +10,22 @@ import youdeserveit from '../../assets/images/reactions/youdeserveit.png'
 
 const JournalCard = ({ entry, handleEmojiPress }) => {
 
+    
+    const avatarMap = {
+        pig: require('../../assets/images/avatars/pig.png'),
+        bunny: require('../../assets/images/avatars/bunny.png'),
+        penguin: require('../../assets/images/avatars/penguin.png'),
+        duck: require('../../assets/images/avatars/duck.png'),
+    };
+
+    const getAvatarSource = (animalName) => {
+        return avatarMap[animalName]
+    };
+
     return (
         <Card containerStyle={styles.cardContainer}>
             <View style={styles.cardHeader}>
-                <Avatar size="small" rounded source={entry.avatar} />
+                <Avatar size="small" rounded source={getAvatarSource(entry.avatar)} />
                 <Text style={styles.dateText}>{entry.date}</Text>
             </View>
             <Image source={entry.image} style={styles.cardImage} />

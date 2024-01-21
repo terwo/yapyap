@@ -26,8 +26,44 @@ const ResultsScreen = ({ post, navigation, emotion }) => {
         navigation.navigate('Forum')
     }
 
+  //   const getSentimental = async () => {
+  //     try {
+  //         console.log('Attempting to log in'); // Debugging log
+  //         const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read?username=${username}&password=${password}`, {
+  //             method: 'GET',
+  //             headers: { 'Content-Type': 'application/json' },
+  //             // body: JSON.stringify({ username: username, password: password }),
 
-    checkSwitch=(emotion)=>{
+  //         });
+  //         console.log(response.status)
+  //         if (response.ok) {
+  //             userData = await response.json();
+  //             setUser({ id: userData.user_id, username: username });
+  //         } else {
+  //             throw new Error('Login failed');
+  //         }
+  //         const id = userData.user_id;
+  //         console.log('Seeing if user has made a post today or not');
+  //         const posted = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum?user_id=${id}`, {
+  //             method: 'GET',
+  //             headers: { 'Content-Type': 'application/json' },
+  //             // body: JSON.stringify({ user_id: id }),
+  //         });
+  //         console.log('Response:', posted.status)
+  //         if (posted.ok) {
+  //             console.log('User has made a post today, go to forum page');
+  //             navigation.navigate('Forum');
+  //         } else {
+  //             console.log('User has not made a post today, go to Today page');
+  //             navigation.navigate('Today');
+  //         }
+  //     } catch (error) {
+  //         console.error('Login Error:', error);
+  //     }
+  // };
+
+
+    checkSwitch=(param)=>{
       switch(param) {
 
         case 'happy':

@@ -6,6 +6,11 @@ import loading from '../../assets/images/loading.gif';
 // WHEN THE CALLS HAVE COME BACK THAT IS WHEN WE WILL NAVIGATE TO THE RESULTS!!!
 
 const LoadingScreen = ({ navigation }) => {
+
+    setTimeout(() => {
+        navigation.navigate('Results')
+    }, 3000);
+
     return (
         <View style={styles.container}>
       <Image
