@@ -2,6 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
 import EmojiButton from './EmojiButton'; // Assuming EmojiButton is a separate component
+import muchlove from '../../assets/images/reactions/muchlove.png'
+import babel from '../../assets/images/reactions/babel.config.png'
+import samehere from '../../assets/images/reactions/samehere.png'
+import staystrong from '../../assets/images/reactions/staystrong.png'
+import youdeserveit from '../../assets/images/reactions/youdeserveit.png'
 
 const JournalCard = ({ entry, handleEmojiPress }) => {
 

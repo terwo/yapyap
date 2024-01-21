@@ -1,37 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
 import JournalCard from '../components/JournalCard'; // Assuming this is the correct path
-import pig from '../../assets/images/avatars/pig.png'
 import happy from '../../assets/images/emotions/happy.png'
-import muchlove from '../../assets/images/reactions/muchlove.png'
-import babel from '../../assets/images/reactions/babel.config.png'
-import samehere from '../../assets/images/reactions/samehere.png'
-import staystrong from '../../assets/images/reactions/staystrong.png'
-import youdeserveit from '../../assets/images/reactions/youdeserveit.png'
+
 const ProfileScreen = () => {
-    const journalEntries = [
-        {
-            title: 'Entry 1', date: '2023-01-01', content: 'Content for entry 1 and i dna;ejiahsdfhuhauif uawehfe hoafosdfasdfasdfjaklsjdfkladsjfkjkl;asjfkljsakdjsdlfjkadjsf fjdsklaf;js lakfjsklf js fldjsl fjkds fklj slkf',
-            avatar: '../../assets/images/avatars/pig.png', emotion: 'happy'
-        }
-    ];
 
+    const [user, setUser] = useState(null);
+    const [journalEntries, setJournalEntries] = useState([]);
 
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read');
+                const data = await response.json();
+                // log what journalEntries were before
+                console.log(data);
+                setUser(data); // Assuming the response has a user object
+                setJournalEntries(data.posts); // Assuming user has journalEntries
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        fetchProfile();
+    }, []);
 
     const handleEmojiPress = async (entryId, emojiType) => {
         try {
-            const response = await fetch(`https://yourapi.com/entries/${entryId}/reactions`, {
+            const response = await fetch(`https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/react`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ emojiType }),
             });
             if (!response.ok) throw new Error('Network response was not ok');
-            // Handle successful reaction update...
+            // TODO Handle successful reaction update...
         } catch (error) {
             console.error('Error updating reaction:', error);
         }
     };
+
+    const avatarMap = {
+        pig: require('../../assets/images/avatars/pig.png'),
+        bunny: require('../../assets/images/avatars/bunny.png'),
+        penguin: require('../../assets/images/avatars/penguin.png'),
+        duck: require('../../assets/images/avatars/duck.png'),
+    };
+
+    const getAvatarSource = (animalName) => {
+        return avatarMap[animalName]
+    };
+
+    if (!user) {
+        return <Text>Loading...</Text>; // Or any other loading state representation
+    }
 
     return (
         <ScrollView style={styles.container}>
@@ -39,10 +61,10 @@ const ProfileScreen = () => {
                 <Avatar
                     size="large"
                     rounded
-                    source={require('../../assets/images/avatars/pig.png')}
+                    source={getAvatarSource(user.avatar)}
                     containerStyle={styles.avatar}
                 />
-                <Text style={styles.username}>YapperBear</Text>
+                <Text style={styles.username}>{user.username}</Text>
             </View>
             {journalEntries.map((entry, index) => (
                 <JournalCard

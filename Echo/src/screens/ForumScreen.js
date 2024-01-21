@@ -6,12 +6,26 @@ const ForumScreen = () => {
     const [forumPosts, setForumPosts] = useState([]);
 
     useEffect(() => {
-        // Fetch forum posts from the backend
+        const fetchForumPosts = async () => {
+            try {
+                const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum');
+                const data = await response.json();
+                setForumPosts(data.posts || []); // Set to empty array if posts are undefined
+            } catch (error) {
+                console.error('Error fetching forum posts:', error);
+            }
+        };
+
+        fetchForumPosts();
     }, []);
+
+    const handleEmojiPress = (postId, emojiType) => {
+        // Implement the emoji press handling logic here
+    };
 
     return (
         <ScrollView style={styles.container}>
-            {forumPosts.map((post, index) => (
+            {Array.isArray(forumPosts) && forumPosts.map((post, index) => (
                 <JournalCard key={index} entry={post} handleEmojiPress={handleEmojiPress} />
             ))}
         </ScrollView>
@@ -28,3 +42,4 @@ const styles = StyleSheet.create({
 });
 
 export default ForumScreen;
+
