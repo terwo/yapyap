@@ -10,12 +10,11 @@ import youdeserveit from '../../assets/images/reactions/youdeserveit.png'
 
 const JournalCard = ({ entry, handleEmojiPress }) => {
 
-    
     const avatarMap = {
-        pig: require('../../assets/images/avatars/pig.png'),
-        bunny: require('../../assets/images/avatars/bunny.png'),
-        penguin: require('../../assets/images/avatars/penguin.png'),
-        duck: require('../../assets/images/avatars/duck.png'),
+        "pig": require('../../assets/images/avatars/pig.png'),
+        "bunny": require('../../assets/images/avatars/bunny.png'),
+        "penguin": require('../../assets/images/avatars/penguin.png'),
+        "duck": require('../../assets/images/avatars/duck.png'),
     };
 
     const getAvatarSource = (animalName) => {

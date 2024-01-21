@@ -31,18 +31,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  useEffect(() => {
-    async function loadFont() {
-      await Font.loadAsync({
-        'custom-font': require('./assets/fonts/Nunito-Regular.ttf'),
-      });
-
-      Text.defaultProps.style.fontFamily = 'custom-font';
-    }
-
-    loadFont();
-  }, []);
-
   return (
     <UserProvider>
       <NavigationContainer>

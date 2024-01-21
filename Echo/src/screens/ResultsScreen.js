@@ -20,11 +20,13 @@ const emotionHeader = 'Happy'
 // post is the post info in the database
 // emotion should be the emotion returned from the ML model??
 
-const ResultsScreen = ({ post, navigation, emotion }) => {
+const ResultsScreen = ({ route, navigation }) => {
 
-    const finishPost = () => {
-        navigation.navigate('Forum')
-    }
+  // const { emotion } = route.params;
+
+  const finishPost = () => {
+    navigation.navigate('Forum')
+  }
 
   //   const getSentimental = async () => {
   //     try {
@@ -63,42 +65,42 @@ const ResultsScreen = ({ post, navigation, emotion }) => {
   // };
 
 
-    checkSwitch=(param)=>{
-      switch(param) {
+  checkSwitch = (param) => {
+    switch (param) {
 
-        case 'happy':
-          imageEmotion = happy;
-          textEmotion = happy_text;
-          emotionHeader = 'Happy'
-          
-        case 'angry':
-          imageEmotion = angry;
-          textEmotion = angry_text;
-          emotionHeader = 'Angry'
+      case 'happy':
+        imageEmotion = happy;
+        textEmotion = happy_text;
+        emotionHeader = 'Happy'
 
-        case 'neutral':
-          imageEmotion = neutral;
-          textEmotion = neutral_text;
-          emotionHeader = 'Neutral'
+      case 'angry':
+        imageEmotion = angry;
+        textEmotion = angry_text;
+        emotionHeader = 'Angry'
 
-        case 'sad':
-          imageEmotion = sad;
-          textEmotion = sad_text;
-          emotionHeader = 'Sad'
+      case 'neutral':
+        imageEmotion = neutral;
+        textEmotion = neutral_text;
+        emotionHeader = 'Neutral'
 
-        case 'scared':
-          imageEmotion = scared;
-          textEmotion = scared_text;
-          emotionHeader = 'Scared'
-      
-        // default:
-        //   Alert.alert(param);
-        }
-    
+      case 'sad':
+        imageEmotion = sad;
+        textEmotion = sad_text;
+        emotionHeader = 'Sad'
+
+      case 'scared':
+        imageEmotion = scared;
+        textEmotion = scared_text;
+        emotionHeader = 'Scared'
+
+      // default:
+      //   Alert.alert(param);
     }
 
-    return (
-        <View style={styles.container}>
+  }
+
+  return (
+    <View style={styles.container}>
       <View>
         <Text style={styles.header}>Sounds like you’re...</Text>
       </View>
@@ -114,29 +116,29 @@ const ResultsScreen = ({ post, navigation, emotion }) => {
       </View>
       <View style={styles.info}>
         <Text style={styles.quip}>
-           {/* Message depends on results on AI */}
+          {/* Message depends on results on AI */}
           {textEmotion}
         </Text>
       </View>
       <View style={styles.details}>
         <Text>
-            {/* Should take message from Journal Entry Screen AND ALSO SAVE IT! */}
+          {/* Should take message from Journal Entry Screen AND ALSO SAVE IT! */}
 
-            {/* replace with post.journal_entry */}
+          {/* replace with post.journal_entry */}
           Going to my first 24hr hackathon today! excited to met people and have a good time
         </Text>
       </View>
 
       <TouchableOpacity onPress={finishPost}>
 
-      <View style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>Finish Post</Text>
-      </View>
+        <View style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>Finish Post</Text>
+        </View>
 
-        </TouchableOpacity>
+      </TouchableOpacity>
 
     </View>
-    );
+  );
 };
 
 export default ResultsScreen;
@@ -197,17 +199,17 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     color: "black",
-      borderRadius: 30,
-      backgroundColor: "#F28D62",
-      alignSelf: "center",
-      alignItems: "center",
-      paddingTop: 12,
-      paddingBottom: 12,
-      width: 292.7,
+    borderRadius: 30,
+    backgroundColor: "#F28D62",
+    alignSelf: "center",
+    alignItems: "center",
+    paddingTop: 12,
+    paddingBottom: 12,
+    width: 292.7,
     //   fontFamily: "Nunito, sans-serif",
   },
   buttonText: {
     fontSize: 18,
-    
+
   },
 });

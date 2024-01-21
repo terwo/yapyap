@@ -4,12 +4,22 @@ import { Avatar, Card } from 'react-native-elements';
 import JournalCard from '../components/JournalCard'; // Assuming this is the correct path
 import { useUser } from '../context/UserContext.js';
 
+
 const ProfileScreen = () => {
-    const [journalEntries, setJournalEntries] = useState([]);
+    // const [journalEntries, setJournalEntries] = useState([]);
+    const [profile, setProfile] = useState(null); // keep profile as a global var in this function
+
+    const journalEntries = [
+        { avatar: "pig", date: '2021-10-01', image: "../../assets/images/happy.png", emotion: 'Happy', content: 'I am happy today', emojiCount: 0 },
+        { avatar: "bunny", date: '2021-10-02', image: "../../assets/images/sad.png", emotion: 'Sad', content: 'I am sad today', emojiCount: 0 },
+        { avatar: "penguin", date: '2021-10-03', image: "../../assets/images/angry.png", emotion: 'Angry', content: 'I am angry today', emojiCount: 0 },
+        { avatar: "duck", date: '2021-10-04', image: "../../assets/images/neutral.png", emotion: 'Neutral', content: 'Im just feeling whatever today', emojiCount: 0 },
+        { avatar: "pig", date: '2021-10-05', image: "../../assets/images/happy.png", emotion: 'Fear', content: 'That was really scary', emojiCount: 0 },
+    ];
 
     const { user } = useUser();
 
-    const profile = null; // keep profile as a global var in this function
+    console.log('Profile before use effect:', profile)
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -18,9 +28,11 @@ const ProfileScreen = () => {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                 });
-                profile = await response.json();
+                const result = await response.json();
+                setProfile(result);
+                console.log('Profile after use effect:', result)
                 console.log('Response status:' + response.status);
-                setJournalEntries(data.posts); // Assuming user has journalEntries
+                // setJournalEntries(result.posts); // Assuming user has journalEntries
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
@@ -44,10 +56,10 @@ const ProfileScreen = () => {
     };
 
     const avatarMap = {
-        pig: require('../../assets/images/avatars/pig.png'),
-        bunny: require('../../assets/images/avatars/bunny.png'),
-        penguin: require('../../assets/images/avatars/penguin.png'),
-        duck: require('../../assets/images/avatars/duck.png'),
+        "pig": require('../../assets/images/avatars/pig.png'),
+        "bunny": require('../../assets/images/avatars/bunny.png'),
+        "penguin": require('../../assets/images/avatars/penguin.png'),
+        "duck": require('../../assets/images/avatars/duck.png'),
     };
 
     const getAvatarSource = (animalName) => {
@@ -61,12 +73,12 @@ const ProfileScreen = () => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.avatarContainer}>
-                <Avatar
+                (profile && <Avatar
                     size="large"
                     rounded
                     source={getAvatarSource(profile.avatar)}
                     containerStyle={styles.avatar}
-                />
+                />)
                 <Text style={styles.username}>{user.username}</Text>
             </View>
             {journalEntries.map((entry, index) => (
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
         borderRadius: 10, // Rounded corners for the card
     },
     imageDescription: {
-        fontFamily: 'Nunito, sans-serif',
+        // fontFamily: 'Nunito, sans-serif',
         fontSize: 16,
         fontWeight: 'bold',
         marginVertical: 10,
@@ -116,7 +128,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     dateText: {
-        fontFamily: 'Nunito, sans-serif',
+        //  fontFamily: 'Nunito, sans-serif',
         fontSize: 16,
     },
     cardImage: {
@@ -127,7 +139,7 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     contentText: {
-        fontFamily: 'Nunito, sans-serif',
+        // fontFamily: 'Nunito, sans-serif',
         marginVertical: 10,
     },
     emojiContainer: {
