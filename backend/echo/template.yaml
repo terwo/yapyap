@@ -168,4 +168,4 @@ Outputs:
     Value: !GetAtt UndoReactFunction.Arn
   UndoReactFunctionIamRole:
     Description: Implicit IAM Role created for Undo React function
-    Value: !GetAtt Undo ReactFunctionRole.Arn
+    Value: !GetAtt UndoReactFunctionRole.Arn
