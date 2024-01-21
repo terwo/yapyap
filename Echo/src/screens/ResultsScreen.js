@@ -13,6 +13,10 @@ const neutral_text = "Neutral is good! Take it one day at a time, slowly and ste
 const sad_text = "The sun always shines after the storm. Virtual head pats coming your way <3"
 const scared_text = "Fear is just another reason to try harder. You’re stronger than you think! "
 
+const imageEmotion = happy
+const textEmotion = happy_text
+const emotionHeader = 'Happy'
+
 // post is the post info in the database
 // emotion should be the emotion returned from the ML model??
 
@@ -20,6 +24,41 @@ const ResultsScreen = ({ post, navigation, emotion }) => {
 
     const finishPost = () => {
         navigation.navigate('Forum')
+    }
+
+
+    checkSwitch=(emotion)=>{
+      switch(param) {
+
+        case 'happy':
+          imageEmotion = happy;
+          textEmotion = happy_text;
+          emotionHeader = 'Happy'
+          
+        case 'angry':
+          imageEmotion = angry;
+          textEmotion = angry_text;
+          emotionHeader = 'Angry'
+
+        case 'neutral':
+          imageEmotion = neutral;
+          textEmotion = neutral_text;
+          emotionHeader = 'Neutral'
+
+        case 'sad':
+          imageEmotion = sad;
+          textEmotion = sad_text;
+          emotionHeader = 'Sad'
+
+        case 'scared':
+          imageEmotion = scared;
+          textEmotion = scared_text;
+          emotionHeader = 'Scared'
+      
+        // default:
+        //   Alert.alert(param);
+        }
+    
     }
 
     return (
@@ -30,17 +69,17 @@ const ResultsScreen = ({ post, navigation, emotion }) => {
       <Image
         // Image Source Result depends on AI
         resizeMode="contain"
-        source={happy}
+        source={imageEmotion}
         style={styles.image}
       />
       <View >
         {/* Result depends on results on AI */}
-        <Text style={styles.heading}>Happy</Text>
+        <Text style={styles.heading}>{emotionHeader}</Text>
       </View>
       <View style={styles.info}>
         <Text style={styles.quip}>
            {/* Message depends on results on AI */}
-          If you’re thriving and you know it clap your hands *clap clap*
+          {textEmotion}
         </Text>
       </View>
       <View style={styles.details}>
