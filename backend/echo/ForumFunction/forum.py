@@ -20,7 +20,6 @@ def lambda_handler(event, context):
         return {"statusCode": 401}
     
     uri = os.environ.get("ATLAS_URI")
-    
     if posted_today(uri, user_id) is not None:
         if (posts := read_all_posts(uri)) is None:
             return {
