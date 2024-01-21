@@ -13,7 +13,13 @@ const EmojiButton = ({ emojiImage, count, onPress }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        marginHorizontal: 5,
+        // marginHorizontal: 5,
+        
+        backgroundColor: "#e9e9f9",
+        borderRadius: 10,
+        padding: 5,
+        paddingRight: 24,
+
     },
     image: {
         width: 30,
@@ -21,7 +27,9 @@ const styles = StyleSheet.create({
     },
     count: {
         fontSize: 14,
-        marginTop: 2,
+        marginTop: -16,
+        bottom: 8,
+        left: 24,
     },
     // Add additional styling as needed
 });

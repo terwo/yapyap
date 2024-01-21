@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     dateText: {
-        fontFamily: 'Nunito, sans-serif',
+        // fontFamily: 'Nunito, sans-serif',
         fontSize: 16,
     },
     cardImage: {
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     imageDescription: {
-        fontFamily: 'Nunito, sans-serif',
+        // fontFamily: 'Nunito-Bold',
         fontSize: 16,
         fontWeight: 'bold',
         marginVertical: 10,
         textAlign: 'center',
     },
     contentText: {
-        fontFamily: 'Nunito, sans-serif',
+        // fontFamily: 'Nunito, sans-serif',
         marginVertical: 10,
     },
     emojiContainer: {

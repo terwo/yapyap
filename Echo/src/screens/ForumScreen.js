@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         // padding: 50,
     },
     header: {
-        marginTop: 40,
+        paddingTop: 40,
         width: "100%",
         backgroundColor: "#FFF",
         // alignContent: "space-between",

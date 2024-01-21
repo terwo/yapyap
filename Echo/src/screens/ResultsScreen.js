@@ -13,7 +13,10 @@ const neutral_text = "Neutral is good! Take it one day at a time, slowly and ste
 const sad_text = "The sun always shines after the storm. Virtual head pats coming your way <3"
 const scared_text = "Fear is just another reason to try harder. You’re stronger than you think! "
 
-const ResultsScreen = ({ navigation }) => {
+// post is the post info in the database
+// emotion should be the emotion returned from the ML model??
+
+const ResultsScreen = ({ post, navigation, emotion }) => {
 
     const finishPost = () => {
         navigation.navigate('Forum')
@@ -43,6 +46,8 @@ const ResultsScreen = ({ navigation }) => {
       <View style={styles.details}>
         <Text>
             {/* Should take message from Journal Entry Screen AND ALSO SAVE IT! */}
+            
+            {/* replace with post.journal_entry */}
           Going to my first 24hr hackathon today! excited to met people and have a good time
         </Text>
       </View>

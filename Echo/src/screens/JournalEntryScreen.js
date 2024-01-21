@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   date: {
     color: "black",
     textAlign: "center",
-    marginTop: 120,
+    marginTop: 90,
     marginBottom: 60,
     fontSize: 22,
     fontWeight: "bold",
