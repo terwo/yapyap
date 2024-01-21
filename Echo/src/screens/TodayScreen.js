@@ -8,26 +8,42 @@ import logo from '../../assets/images/todayscreen/logo.png';
 
 const TodayScreen = ({ navigation }) => {
 
-    const onPressFunction = () => {
+    const addEntry = () => {
         navigation.navigate('JournalEntry')
+    }
+
+    const goProfile = () => {
+        navigation.navigate('Profile')
+    }
+
+    const goNotifications = () => {
+        navigation.navigate('Notifications')
     }
 
     return (
         <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          resizeMode="contain"
-          source={logo}
-          style={styles.logo}
-        />
+
+<Pressable onPress={goNotifications}>
+      <Image
+            resizeMode="contain"
+            source={logo}
+            style={styles.logo}
+      />
+    </Pressable>
+
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Today</Text>
         </View>
-        <Image
-          resizeMode="contain"
-          source={icon}
-          style={styles.icon}
-        />
+
+        <Pressable onPress={goProfile}>
+      <Image
+              resizeMode="contain"
+              source={icon}
+              style={styles.icon}
+      />
+    </Pressable>
+
       </View>
       <Image
         resizeMode="contain"
@@ -38,18 +54,12 @@ const TodayScreen = ({ navigation }) => {
         <Text style={styles.shareText}>Share your day to view other entries</Text>
       </View>
 
-      <Pressable onPress={onPressFunction}>
+      <Pressable onPress={addEntry}>
       <Image
         style={styles.image}
         source={image}
       />
-</Pressable>
-
-      {/* <Image
-        resizeMode="contain"
-        source={image}
-        style={styles.image}
-      /> */}
+    </Pressable>
     </View>
     );
 };
@@ -59,11 +69,8 @@ export default TodayScreen;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#FFF",
-    // display: "flex",
-    // maxWidth: 480,
     width: "100%",
-    // flexDirection: "column",
-    // margin: "0 auto",
+    height: "100%",
     padding: 50,
   },
   header: {

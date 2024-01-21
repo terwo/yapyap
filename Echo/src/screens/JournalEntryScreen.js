@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+    Pressable,
     FlatList,
     ScrollView,
     View,
@@ -14,74 +15,157 @@ import {
     AccessibilityInfo
 } from "react-native";
 
-const LoginScreen = ({ navigation }) => {
+import back from '../../assets/images/journalentryscreen/back.png';
+
+// const month = getMonth()
+const date = new Date().toDateString()
+
+const JournalEntryScreen = ({ navigation }) => {
+
+    const goBack = () => {
+        navigation.navigate('Today')
+    }
+
+    const [value, onChangeText] = React.useState('YAP AWAY!!!');
+
     return (
         <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.headerText}>H1 Title</Text>
-            </View>
-            <Button title="Go to Today" onPress={() => navigation.navigate('Today')} />
-            <View style={styles.login}>
-                <Text style={styles.loginText}>Login</Text>
-            </View>
-            <View style={styles.createAccount}>
-                <Text style={styles.createAccountText}>Create Account</Text>
-            </View>
+        <View style={styles.header}>
+ 
+          <Pressable onPress={goBack}>
+            <Image
+            resizeMode="contain"
+            source={back}
+            style={styles.back}
+            />
+            </Pressable>
+          <Text style={styles.title}>New Entry</Text>
+          <View></View>
         </View>
+        <Text style={styles.date}>{date}</Text>
+        <View style={styles.question}>
+          <Text style={styles.questionText}>What’s on your mind?</Text>
+          <TextInput
+        editable
+        multiline
+        numberOfLines={12}
+        maxLength={40}
+        onChangeText={text => onChangeText(text)}
+        value={value}
+        style={styles.textYap}
+      />
+        </View>
+        <View style={styles.analyzeButton}>
+          <Text style={styles.buttonText}>Analyze Mood</Text>
+        </View>
+      </View>
     );
 };
+
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFF",
-        display: "flex",
-        flex: 1,
-        maxWidth: 480,
         width: "100%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        marginHorizontal: "auto",
-        //   paddingBottom: 50,
-        //   paddingHorizontal: 60,
+        height: "100%",
+        padding: 50,
     },
     header: {
-        display: "flex",
-        flexDirection: "column",
+        // alignContent: "space-between",
         alignItems: "center",
-    },
-    headerText: {
-        color: "#271E53", // Changed from CSS custom property to a hard-coded value
-        textAlign: "center",
-        letterSpacing: 1,
-        textTransform: "uppercase",
-        fontWeight: "bold",
+        flexDirection: 'row',
+        position: "absolute",
         alignSelf: "center",
-        fontFamily: "Nunito, sans-serif", // Make sure this font is imported or change it to a default font
-        fontSize: 40,
+        gap: 100,
+        // marginBottom: 100,
+        // alignSelf: "stretch",
+        // display: "flex",
+        
+      },
+    back: {
+    //   justifyContent: "center",
+    //   alignItems: "center",
+    //   overflow: "hidden",
+    //   position: "relative",
+    //   display: "flex",
+    //   width: 24,
+    //   flexShrink: 0,
+    //   maxWidth: "100%",
+    //   flexDirection: "column",
+    //   aspectRatio: 1,
     },
-    login: {
-        color: "black",
-        textAlign: "center",
-        letterSpacing: "1px",
-        fontVariantNumeric: "lining-nums tabular-nums",
-        alignSelf: "center",
-        fontFamily: "Nunito, sans-serif",
-        fontSize: 22,
+    title: {
+      color: "black",
+      fontSize: 30,
+      fontWeight: "bold",
+      lineHeight: 123,
+    //   textAlign: "center",
+    //   alignSelf: "center",
+      fontWeight: "bold",
+    //   flexGrow: 1,
+    //   whiteSpace: "nowrap",
+    //   margin: "auto 0",
+    //   font: "700 30px/123% Nunito, sans-serif ",
     },
-    loginText: {
+    date: {
+      color: "black",
+      textAlign: "center",
+      marginTop: 120,
+      marginBottom: 60,
+      fontSize: 22,
+      fontWeight: "bold",
+    //   font: "600 18px/156% Nunito, sans-serif ",
     },
-    createAccount: {
-        color: "black",
-        textAlign: "center",
-        letterSpacing: "1px",
-        fontVariantNumeric: "lining-nums tabular-nums",
-        whiteSpace: "nowrap",
-        fontFamily: "Nunito, sans-serif",
-        fontSize: 22,
+    question: {
+    //   color: "black",
+    //   textAlign: "center",
+    //   alignItems: "center",
+    // //   marginTop: 13,
+    //   fontSize: 26,
+      marginBottom: 150,
+    //   font: "500 25px/112% Nunito, sans-serif ",
     },
-    createAccountText: {
+    questionText: {
+      color: "black",
+      borderRadius: 20,
+      alignSelf: "stretch",
+      alignItems: "center",
+      textAlign: "center",
+      padding: 20,
+      fontSize: 16,
+    //   fontFamily: "Nunito, sans-serif",
     },
-});
+    textYap: {
+    //   color: "black",
+      borderRadius: 20,
+      backgroundColor: "#F8F8F8",
+    //   alignSelf: "stretch",
+    //   marginTop: 102,
+    //   alignItems: "start",
+    //   padding: "20px 60px 229px 20px",
+    padding: 20,
+    fontSize: 16,
+    // marginBottom: 100,
+    //   fontFamily: "Nunito, sans-serif",
+    },
+    analyzeButton: {
+      color: "black",
+      textAlign: "center",
+      borderRadius: 30,
+      backgroundColor: "#F28D62",
+      alignSelf: "stretch",
+      justifyContent: "center",
+      alignItems: "center",
+    //   margin: "151px 0 7px",
+    paddingTop: 12,
+    paddingBottom: 12,
+      fontSize: 22,
+    //   fontFamily: "Nunito, sans-serif",
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: "bold",   
+     }
+  });
 
-export default LoginScreen;
+export default JournalEntryScreen;
