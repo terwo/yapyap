@@ -1,5 +1,5 @@
 import React, { cloneElement } from "react";
-import { Pressable, FlatList, ScrollView, View, StyleSheet, Image, Text } from "react-native";
+import { Pressable, FlatList, ScrollView, View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 
 import banner from '../../assets/images/todayscreen/banner.png';
 import icon from '../../assets/images/todayscreen/icon.png';
@@ -24,25 +24,25 @@ const TodayScreen = ({ navigation }) => {
         <View style={styles.container}>
       <View style={styles.header}>
 
-<Pressable onPress={goNotifications}>
+<TouchableOpacity onPress={goNotifications}>
       <Image
             resizeMode="contain"
             source={logo}
             style={styles.logo}
       />
-    </Pressable>
+    </TouchableOpacity>
 
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Today</Text>
         </View>
 
-        <Pressable onPress={goProfile}>
+        <TouchableOpacity onPress={goProfile}>
       <Image
               resizeMode="contain"
               source={icon}
               style={styles.icon}
       />
-    </Pressable>
+    </TouchableOpacity>
 
       </View>
       <Image
@@ -54,12 +54,12 @@ const TodayScreen = ({ navigation }) => {
         <Text style={styles.shareText}>Share your day to view other entries</Text>
       </View>
 
-      <Pressable onPress={addEntry}>
+      <TouchableOpacity onPress={addEntry}>
       <Image
         style={styles.image}
         source={image}
       />
-    </Pressable>
+    </TouchableOpacity>
     </View>
     );
 };

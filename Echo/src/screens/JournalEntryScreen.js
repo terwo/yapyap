@@ -26,6 +26,10 @@ const JournalEntryScreen = ({ navigation }) => {
         navigation.navigate('Today')
     }
 
+    const callResults = () => {
+        navigation.navigate('Loading')
+    }
+
     const [value, onChangeText] = React.useState('YAP AWAY!!!');
 
     return (
@@ -57,7 +61,12 @@ const JournalEntryScreen = ({ navigation }) => {
       />
         </View>
         <View style={styles.analyzeButton}>
-          <Text style={styles.buttonText}>Analyze Mood</Text>
+
+        <TouchableOpacity onPress={callResults}>
+        <Text style={styles.buttonText}>Next</Text>
+    </TouchableOpacity>
+
+          
         </View>
       </View>
     );
@@ -159,8 +168,8 @@ const styles = StyleSheet.create({
     //   fontFamily: "Nunito, sans-serif",
     },
     buttonText: {
-        fontSize: 20,
-        fontWeight: "bold",   
+        fontSize: 18,
+        // fontWeight: "bold",   
      }
   });
 
