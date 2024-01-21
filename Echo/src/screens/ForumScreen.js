@@ -71,7 +71,6 @@ const ForumScreen = ({ navigation }) => {
 
             </View>
 
-
             {forumPosts.map((post, index) => (
                 <JournalCard key={index} entry={post} handleEmojiPress={handleEmojiPress} />
             ))}
