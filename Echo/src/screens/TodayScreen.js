@@ -74,41 +74,14 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   header: {
-    // alignContent: "space-between",
     alignItems: "center",
     flexDirection: 'row',
     position: "absolute",
     alignSelf: "center",
     gap: 100
     
-    // alignSelf: "stretch",
-    // display: "flex",
     
   },
-  logo: {
-    // justifyContent: "center",
-    // alignItems: "center",
-    // overflow: "hidden",
-    // alignSelf: "stretch",
-    // position: "absolute",
-    // display: "flex",
-    // width: 24,
-    // flexShrink: 0,
-    // maxWidth: "100%",
-    // flexDirection: "column",
-    // aspectRatio: "1",
-  },
-  titleContainer: {
-    // color: "black",
-    // textAlign: "center",
-    // fontVariantNumeric: "lining-nums tabular-nums",
-    // flexGrow: 1,
-    // flexShrink: 1,
-    // flexBasis: "auto",
-    // margin: "auto 0",
-    // font: "700 30px/123% Nunito, sans-serif",
-  },
-
     // GOOD
     title: {
         fontSize: 30,
@@ -116,24 +89,12 @@ const styles = StyleSheet.create({
         lineHeight: 122,
         // fontFamily: "Nunito, sans-serif",
     },
-    icon: {
-        // overflow: "hidden",
-        // alignSelf: "stretch",
-        // position: "relative",
-        // // display: "flex",
-        // width: 24,
-        // flexShrink: 0,
-        // maxWidth: "100%",
-        // flexDirection: "column",
-        // aspectRatio: "1",
-    },
     banner: {
         overflow: "hidden",
         alignSelf: "center",
         position: "relative",
         display: "flex",
         width: 202,
-        // maxWidth: "100%",
         flexDirection: "column",
         aspectRatio: "0.53",
         marginTop: 50,
@@ -156,11 +117,9 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         alignSelf: "center",
         position: "relative",
-        // display: "flex",
         width: 64,
         maxWidth: "100%",
         flexDirection: "column",
-        // marginVertical: 152,
         aspectRatio: "1",
     },
 });
