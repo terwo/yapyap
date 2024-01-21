@@ -31,11 +31,11 @@ Resources:
             Path: /forum
             Method: get
 
-  PostFunction:
+  PostReadFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: PostFunction/
-      Handler: post.lambda_handler
+      CodeUri: PostReadFunction/
+      Handler: post_read.lambda_handler
       Runtime: python3.11
       Architectures:
       - x86_64
@@ -43,7 +43,7 @@ Resources:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /post
+            Path: /post-read
             Method: get
 
   ProfileFunction:
@@ -76,11 +76,11 @@ Resources:
             Path: /react
             Method: post
 
-  SaveYapFunction:
+  PostCreateFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: SaveYapFunction/
-      Handler: save_yap.lambda_handler
+      CodeUri: PostCreateFunction/
+      Handler: post_create.lambda_handler
       Runtime: python3.11
       Architectures:
       - x86_64
@@ -88,7 +88,7 @@ Resources:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /save-yap
+            Path: /post-create
             Method: post
 
 Outputs:
@@ -104,16 +104,26 @@ Outputs:
   ForumFunctionIamRole:
     Description: Implicit IAM Role created for Forum function
     Value: !GetAtt ForumFunctionRole.Arn
+ 
+  PostCreateApi:
+    Description: API Gateway endpoint URL for Prod stage for Post Create function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post-create/"
+  PostCreateFunction:
+    Description: Post Create Lambda Function ARN
+    Value: !GetAtt PostCreateFunction.Arn
+  CreateFunctionIamRole:
+    Description: Implicit IAM Role created for Post Create function
+    Value: !GetAtt PostCreateFunctionRole.Arn
 
-  PostApi:
-    Description: API Gateway endpoint URL for Prod stage for Post function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post/"
-  PostFunction:
-    Description: Post Lambda Function ARN
-    Value: !GetAtt PostFunction.Arn
-  PostFunctionIamRole:
-    Description: Implicit IAM Role created for Post function
-    Value: !GetAtt PostFunctionRole.Arn
+  PostReadApi:
+    Description: API Gateway endpoint URL for Prod stage for Post Read function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post-read/"
+  PostReadFunction:
+    Description: Post Read Lambda Function ARN
+    Value: !GetAtt PostReadFunction.Arn
+  PostReadFunctionIamRole:
+    Description: Implicit IAM Role created for Post Read function
+    Value: !GetAtt PostReadFunctionRole.Arn
 
   ProfileApi:
     Description: API Gateway endpoint URL for Prod stage for Profile function
@@ -134,13 +144,3 @@ Outputs:
   ReactFunctionIamRole:
     Description: Implicit IAM Role created for React function
     Value: !GetAtt ReactFunctionRole.Arn
-
-  SaveYapApi:
-    Description: API Gateway endpoint URL for Prod stage for Save Yap function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/save-yap/"
-  SaveYapFunction:
-    Description: Save Yap Lambda Function ARN
-    Value: !GetAtt SaveYapFunction.Arn
-  SaveYapFunctionIamRole:
-    Description: Implicit IAM Role created for SaveYap function
-    Value: !GetAtt SaveYapFunctionRole.Arn
