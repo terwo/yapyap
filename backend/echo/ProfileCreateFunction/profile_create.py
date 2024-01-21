@@ -11,6 +11,9 @@ def lambda_handler(event, context):
         Return a User Object
     """
 
+    event = json.loads(event["body"])
+    print(event)
+
     # authenticate the user
     if (username := event.get("username")) is None:
         return {
@@ -19,6 +22,14 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "A username must be included"})
         }
     
+    if (password := event.get("password")) is None:
+        return {
+            "statusCode": 400,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"message": "A password must be included"})
+        }
+    
+        
     # get the user information from the authentication
     
     # get the user object from the database
@@ -27,5 +38,5 @@ def lambda_handler(event, context):
     return {
         "statusCode": 200,
         "headers": {"Content-Type": "application/json"},
-        "body": json.dumps({"message": f"User {username} will be created"})
+        "body": json.dumps({"message": f"User {username} will be created with password {password}"})
     }
