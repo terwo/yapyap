@@ -27,6 +27,7 @@ def lambda_handler(event, context):
     #! dummy data
     return {
         "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
         "message": "Post created successfully",
-        "data": "sad"
+        "body": json.dumps({"sentimental_value": "sad"})
     }

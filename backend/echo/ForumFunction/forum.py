@@ -20,7 +20,8 @@ def lambda_handler(event, context):
     #! dummy data
     return {
         "statusCode": 200,
-        "data": {
+        "headers": {"Content-Type": "application/json"},
+        "body": json.dumps({
             "posts": [
                 {
                     "post_id": "1",
@@ -45,5 +46,5 @@ def lambda_handler(event, context):
                     }
                 }
             ]
-        }
+        })
     }
