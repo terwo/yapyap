@@ -11,7 +11,7 @@ def get_client(atlas_uri: str) -> MongoClient:
     return MongoClient(host=atlas_uri)
 
 
-def add_user(atlas_uri: str, username: str, password:str) -> bool | None:
+def add_user(atlas_uri: str, username: str, password:str) -> str | int:
     """
     Add a user to the database.
 
@@ -26,7 +26,7 @@ def add_user(atlas_uri: str, username: str, password:str) -> bool | None:
     users = client.EchoDev.users
 
     if users.find_one({"username": username}) is not None:
-        return None
+        return -1
     
     result = users.insert_one({
         "username": username,
@@ -35,4 +35,4 @@ def add_user(atlas_uri: str, username: str, password:str) -> bool | None:
         "posts": []
     })            
 
-    return True if result.inserted_id else False        
+    return str(result.inserted_id) if result.inserted_id else -2       

@@ -22,6 +22,15 @@ Resources:
       ContentUri: layers
       CompatibleRuntimes:
         - python3.11
+  
+  LibLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      ContentUri: LibLayer
+      CompatibleRuntimes:
+        - python3.11
+    Metadata:
+      BuildMethod: python3.11
 
   ForumFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -78,6 +87,7 @@ Resources:
       - x86_64
       Layers:
       - !Ref MyLayer
+      - !Ref LibLayer
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -140,6 +150,13 @@ Outputs:
     Export:
       Name: !Sub '${AWS::StackName}-MyLayerArn'
   
+  LibLayer:
+    Description: "Layer containing following libraries: pymongo"
+    Value: !Ref LibLayer
+    Export:
+      Name: !Sub '${AWS::StackName}-LibLayer'
+
+
   ForumApi:
     Description: API Gateway endpoint URL for Prod stage for Forum function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/forum/"

@@ -29,9 +29,14 @@ def lambda_handler(event, context):
         }
     
     result = add_user(os.environ.get("ATLAS_URI"), username, password)
-    if result:
-        return {"statusCode": 200}        
-    if result is None:
+    if isinstance(result, str):
+        return {
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": json.dumps({"user_id": result})
+            
+        }        
+    if result == -1:
         return {
             "statusCode": 400,
             "headers": {"Content-Type": "application/json"}, 
