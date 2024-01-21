@@ -10,7 +10,7 @@ import scared from '../../assets/images/resultsscreen/scared_result.png';
 const ResultsScreen = ({ navigation }) => {
 
     const finishPost = () => {
-        navigation.navigate('Today')
+        navigation.navigate('Forum')
     }
 
     return (
