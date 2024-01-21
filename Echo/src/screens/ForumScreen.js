@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { Pressable, FlatList, ScrollView, View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import JournalCard from '../components/JournalCard';
 
-const ForumScreen = () => {
+import icon from '../../assets/images/todayscreen/icon.png';
+import logo from '../../assets/images/todayscreen/logo.png';
+
+const ForumScreen = ({ navigation }) => {
     const [forumPosts, setForumPosts] = useState([]);
+
+
+    const goProfile = () => {
+        navigation.navigate('Profile')
+    }
+
+    const goNotifications = () => {
+        navigation.navigate('Results')
+    }
 
     useEffect(() => {
         const fetchForumPosts = async () => {
@@ -24,8 +36,43 @@ const ForumScreen = () => {
     };
 
     return (
-        <ScrollView style={styles.container}>
-            {Array.isArray(forumPosts) && forumPosts.map((post, index) => (
+
+
+        <ScrollView
+            style={styles.container}
+            stickyHeaderIndices={[0]}>
+
+
+            <View>
+
+                <View style={styles.header}>
+
+                    <TouchableOpacity onPress={goNotifications}>
+                        <Image
+                            resizeMode="contain"
+                            source={logo}
+                            style={styles.logo}
+                        />
+                    </TouchableOpacity>
+
+                    <View style={styles.titleContainer}>
+                        <Text style={styles.title}>Today</Text>
+                    </View>
+
+                    <TouchableOpacity onPress={goProfile}>
+                        <Image
+                            resizeMode="contain"
+                            source={icon}
+                            style={styles.icon}
+                        />
+                    </TouchableOpacity>
+
+                </View>
+
+            </View>
+
+
+            {forumPosts.map((post, index) => (
                 <JournalCard key={index} entry={post} handleEmojiPress={handleEmojiPress} />
             ))}
         </ScrollView>
@@ -35,9 +82,25 @@ const ForumScreen = () => {
 // Styles for ForumScreen
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        marginTop: 20,
+        backgroundColor: "#FFF",
+        width: "100%",
+        height: "100%",
+        // padding: 50,
     },
+    header: {
+        alignContent: "space-between",
+        alignItems: "center",
+        flexDirection: 'row',
+        // position: "absolute",
+        alignSelf: "center",
+        gap: 100,
+    },
+    title: {
+        fontSize: 30,
+        fontWeight: "bold",
+        lineHeight: 122,
+    },
+
     // Additional styles if needed
 });
 
