@@ -61,11 +61,11 @@ Resources:
             Path: /post-read
             Method: get
 
-  ProfileFunction:
+  ProfileCreateFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: ProfileFunction/
-      Handler: profile.lambda_handler
+      CodeUri: ProfileCreateFunction/
+      Handler: profile_create.lambda_handler
       Runtime: python3.11
       Architectures:
       - x86_64
@@ -73,7 +73,22 @@ Resources:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /profile
+            Path: /profile-create
+            Method: post
+
+  ProfileReadFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ProfileReadFunction/
+      Handler: profile_read.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Events:
+        Forum:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /profile-read
             Method: get
 
   ReactFunction:
@@ -140,15 +155,25 @@ Outputs:
     Description: Implicit IAM Role created for Post Read function
     Value: !GetAtt PostReadFunctionRole.Arn
 
-  ProfileApi:
-    Description: API Gateway endpoint URL for Prod stage for Profile function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/profile/"
-  ProfileFunction:
-    Description: Profile Lambda Function ARN
-    Value: !GetAtt ProfileFunction.Arn
-  ProfileFunctionIamRole:
-    Description: Implicit IAM Role created for Profile function
-    Value: !GetAtt ProfileFunctionRole.Arn
+  ProfileCreateApi:
+    Description: API Gateway endpoint URL for Prod stage for Profile Create Read function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/profile-create/"
+  ProfileCreateFunction:
+    Description: Profile Create Lambda Function ARN
+    Value: !GetAtt ProfileCreateFunction.Arn
+  ProfileCreateFunctionIamRole:
+    Description: Implicit IAM Role created for Profile Create function
+    Value: !GetAtt ProfileCreateFunctionRole.Arn
+
+  ProfileReadApi:
+    Description: API Gateway endpoint URL for Prod stage for Profile Read function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/profile-read/"
+  ProfileReadFunction:
+    Description: Profile Read Lambda Function ARN
+    Value: !GetAtt ProfileReadFunction.Arn
+  ProfileReadFunctionIamRole:
+    Description: Implicit IAM Role created for Profile Read function
+    Value: !GetAtt ProfileReadFunctionRole.Arn
 
   ReactApi:
     Description: API Gateway endpoint URL for Prod stage for React function
