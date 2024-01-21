@@ -22,7 +22,7 @@ def add_user(atlas_uri: str, username: str, password:str) -> bool | None:
     Returns:
         bool | None: True if inserted, False if not. None if the username already exists.
     """
-    client = get_client()
+    client = get_client(atlas_uri)
     users = client.EchoDev.users
 
     if users.find_one({"username": username}) is not None:
