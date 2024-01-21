@@ -1,18 +1,18 @@
 import * as React from "react";
 import {
-    Pressable,
-    FlatList,
-    ScrollView,
-    View,
-    StyleSheet,
-    Image,
-    Text,
-    Button,
-    TextInput,
-    TouchableOpacity,
-    TouchableWithoutFeedback,
-    Linking,
-    AccessibilityInfo
+  Pressable,
+  FlatList,
+  ScrollView,
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Button,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  Linking,
+  AccessibilityInfo
 } from "react-native";
 
 import back from '../../assets/images/journalentryscreen/back.png';
@@ -22,17 +22,17 @@ const date = new Date().toDateString()
 
 const JournalEntryScreen = ({ navigation }) => {
 
-    const goBack = () => {
-        navigation.navigate('Today')
-    }
+  const goBack = () => {
+    navigation.navigate('Today')
+  }
 
-    const callResults = () => {
-        navigation.navigate('Loading')
-    }
+  const callResults = () => {
+    navigation.navigate('Loading')
+  }
 
 
-    // NEED TO SAVE THE TEXT SUBMITTED AND SEND IT TO AI AND RESULTS!!
-    const [value, onChangeText] = React.useState('YAP AWAY!!!');
+  // NEED TO SAVE THE TEXT SUBMITTED AND SEND IT TO AI AND RESULTS!!
+  const [value, onChangeText] = React.useState('YAP AWAY!!!');
 
     return (
         <View style={styles.container}>
@@ -65,12 +65,12 @@ const JournalEntryScreen = ({ navigation }) => {
         <TouchableOpacity onPress={callResults}>
         <View style={styles.analyzeButton}>
 
-        <Text style={styles.buttonText}>Next</Text>
-          
+          <Text style={styles.buttonText}>Next</Text>
+
         </View>
-        </TouchableOpacity>
-      </View>
-    );
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 
@@ -122,40 +122,40 @@ const styles = StyleSheet.create({
     //   whiteSpace: "nowrap",
     //   margin: "auto 0",
     //   font: "700 30px/123% Nunito, sans-serif ",
-    },
-    date: {
-      color: "black",
-      textAlign: "center",
-      marginTop: 120,
-      marginBottom: 60,
-      fontSize: 22,
-      fontWeight: "bold",
+  },
+  date: {
+    color: "black",
+    textAlign: "center",
+    marginTop: 120,
+    marginBottom: 60,
+    fontSize: 22,
+    fontWeight: "bold",
     //   font: "600 18px/156% Nunito, sans-serif ",
-    },
-    question: {
+  },
+  question: {
     //   color: "black",
     //   textAlign: "center",
     //   alignItems: "center",
     // //   marginTop: 13,
     //   fontSize: 26,
-      marginBottom: 100,
+    marginBottom: 100,
     //   font: "500 25px/112% Nunito, sans-serif ",
-    },
-    questionText: {
-      color: "black",
-      borderRadius: 20,
-      alignSelf: "stretch",
-      alignItems: "center",
-      textAlign: "center",
-      padding: 20,
-      fontSize: 16,
+  },
+  questionText: {
+    color: "black",
+    borderRadius: 20,
+    alignSelf: "stretch",
+    alignItems: "center",
+    textAlign: "center",
+    padding: 20,
+    fontSize: 16,
     //   fontFamily: "Nunito, sans-serif",
-    },
-    textYap: {
+  },
+  textYap: {
     //   color: "black",
     textAlignVertical: 'top',
-      borderRadius: 20,
-      backgroundColor: "#F8F8F8",
+    borderRadius: 20,
+    backgroundColor: "#F8F8F8",
     //   alignSelf: "stretch",
     //   marginTop: 102,
     //   alignItems: "start",
@@ -165,25 +165,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     // marginBottom: 100,
     //   fontFamily: "Nunito, sans-serif",
-    },
-    analyzeButton: {
-      color: "black",
-      textAlign: "center",
-      borderRadius: 30,
-      backgroundColor: "#F28D62",
-      alignSelf: "stretch",
-      justifyContent: "center",
-      alignItems: "center",
+  },
+  analyzeButton: {
+    color: "black",
+    textAlign: "center",
+    borderRadius: 30,
+    backgroundColor: "#F28D62",
+    alignSelf: "stretch",
+    justifyContent: "center",
+    alignItems: "center",
     //   margin: "151px 0 7px",
     paddingTop: 12,
     paddingBottom: 12,
-      fontSize: 22,
+    fontSize: 22,
     //   fontFamily: "Nunito, sans-serif",
-    },
-    buttonText: {
-        fontSize: 18,
-        // fontWeight: "bold",   
-     }
-  });
+  },
+  buttonText: {
+    fontSize: 18,
+    // fontWeight: "bold",   
+  }
+});
 
 export default JournalEntryScreen;
