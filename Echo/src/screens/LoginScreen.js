@@ -21,13 +21,22 @@ const LoginScreen = ({ navigation }) => {
     const handleLogin = async () => {
         try {
             console.log('Attempting to log in'); // Debugging log
-            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
+            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
             });
             const data = await response.json();
-            console.log('Response:', data);
+            console.log('Seeing if user has made a post today or not');
+            const posted = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/forum', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username }),
+            });
+            if (posted.boo === true) {
+                console.log('User has made a post today, go to forum page');
+                navigation.navigate('Forum');
+            }
             // if (data.token) {
             //     await AsyncStorage.setItem('userToken', data.token);
             //     // Navigate to your main app screen

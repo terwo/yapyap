@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 import { Avatar, Card } from 'react-native-elements';
+import JournalCard from '../components/JournalCard'; // Assuming this is the correct path
 import pig from '../../assets/images/avatars/pig.png'
 import happy from '../../assets/images/emotions/happy.png'
 import muchlove from '../../assets/images/reactions/muchlove.png'
@@ -14,16 +15,22 @@ const ProfileScreen = () => {
             title: 'Entry 1', date: '2023-01-01', content: 'Content for entry 1 and i dna;ejiahsdfhuhauif uawehfe hoafosdfasdfasdfjaklsjdfkladsjfkjkl;asjfkljsakdjsdlfjkadjsf fjdsklaf;js lakfjsklf js fldjsl fjkds fklj slkf',
             avatar: '../../assets/images/avatars/pig.png', emotion: 'happy'
         }
-        // more entries...
     ];
 
-    const EmojiButton = ({ emojiImage, count, onPress }) => {
-        return (
-            <TouchableOpacity onPress={onPress} style={styles.emojiButtonContainer}>
-                <Image source={emojiImage} style={styles.emojiImage} />
-                <Text style={styles.emojiCount}>{count} </Text>
-            </TouchableOpacity>
-        );
+
+
+    const handleEmojiPress = async (entryId, emojiType) => {
+        try {
+            const response = await fetch(`https://yourapi.com/entries/${entryId}/reactions`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ emojiType }),
+            });
+            if (!response.ok) throw new Error('Network response was not ok');
+            // Handle successful reaction update...
+        } catch (error) {
+            console.error('Error updating reaction:', error);
+        }
     };
 
     return (
@@ -32,50 +39,17 @@ const ProfileScreen = () => {
                 <Avatar
                     size="large"
                     rounded
-                    source={pig}
+                    source={require('../../assets/images/avatars/pig.png')}
                     containerStyle={styles.avatar}
                 />
                 <Text style={styles.username}>YapperBear</Text>
             </View>
-
             {journalEntries.map((entry, index) => (
-                <Card key={index} containerStyle={styles.cardContainer}>
-                    <View style={styles.cardHeader}>
-                        <Avatar size="small" rounded source={pig} />
-                        {/* figure out how to run above using entry.avatar or something */}
-                        <Text style={styles.dateText}>{entry.date}</Text>
-                    </View>
-                    <Image source={happy} style={styles.cardImage} />
-                    <Text style={styles.imageDescription}>Happy</Text>
-                    <Text style={styles.contentText}>{entry.content}</Text>
-                    <View style={styles.emojiContainer}>
-                        <EmojiButton
-                            emojiImage={muchlove}
-                            count={entry.emojiCount}
-                            onPress={() => handleEmojiPress(entry.id, 'emojiType')}
-                        />
-                        <EmojiButton
-                            emojiImage={babel}
-                            count={entry.emojiCount}
-                            onPress={() => handleEmojiPress(entry.id, 'emojiType')}
-                        />
-                        <EmojiButton
-                            emojiImage={youdeserveit}
-                            count={entry.emojiCount}
-                            onPress={() => handleEmojiPress(entry.id, 'emojiType')}
-                        />
-                        <EmojiButton
-                            emojiImage={samehere}
-                            count={entry.emojiCount}
-                            onPress={() => handleEmojiPress(entry.id, 'emojiType')}
-                        />
-                        <EmojiButton
-                            emojiImage={staystrong}
-                            count={entry.emojiCount}
-                            onPress={() => handleEmojiPress(entry.id, 'emojiType')}
-                        />
-                    </View>
-                </Card>
+                <JournalCard
+                    key={index}
+                    entry={entry}
+                    handleEmojiPress={handleEmojiPress}
+                />
             ))}
         </ScrollView>
     );
