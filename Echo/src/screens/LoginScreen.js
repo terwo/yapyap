@@ -52,20 +52,20 @@ const LoginScreen = ({ navigation }) => {
     container: {
       backgroundColor: "#FFF",
       display: "flex",
+      flex: 1,
       maxWidth: 480,
       width: "100%",
       flexDirection: "column",
-      justifyContent: "center",
+      justifyContent: "space-around",
       alignItems: "center",
       marginHorizontal: "auto",
-      paddingVertical: 50,
-      paddingHorizontal: 60,
+    //   paddingBottom: 50,
+    //   paddingHorizontal: 60,
     },
     header: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      marginVertical: 189,
     },
     headerText: {
       color: "#271E53", // Changed from CSS custom property to a hard-coded value
@@ -83,25 +83,21 @@ const LoginScreen = ({ navigation }) => {
       letterSpacing: "1px",
       fontVariantNumeric: "lining-nums tabular-nums",
       alignSelf: "center",
-      marginTop: 312,
       fontFamily: "Nunito, sans-serif",
       fontSize: 22,
     },
     loginText: {
-      marginTop: 22,
     },
     createAccount: {
       color: "black",
       textAlign: "center",
       letterSpacing: "1px",
       fontVariantNumeric: "lining-nums tabular-nums",
-      marginTop: 22,
       whiteSpace: "nowrap",
       fontFamily: "Nunito, sans-serif",
       fontSize: 22,
     },
     createAccountText: {
-      marginTop: 22,
     },
   });
   
