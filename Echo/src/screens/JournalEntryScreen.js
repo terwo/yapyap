@@ -36,17 +36,17 @@ const JournalEntryScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-        <View style={styles.header}>
- 
-          <Pressable onPress={goBack}>
+
+<Pressable onPress={goBack}>
             <Image
             resizeMode="contain"
             source={back}
             style={styles.back}
             />
             </Pressable>
+        <View style={styles.header}>
+ 
           <Text style={styles.title}>New Entry</Text>
-          <View></View>
         </View>
         <Text style={styles.date}>{date}</Text>
         <View style={styles.question}>
@@ -83,26 +83,37 @@ const styles = StyleSheet.create({
     },
     header: {
         // alignContent: "space-between",
-        alignItems: "center",
+        justifyContent: "center",
+        // alignItems: "center",
         flexDirection: 'row',
-        position: "absolute",
+        // position: "relative",
         // textAlign: "center",
-        alignSelf: "center",
         // alignSelf: "center",
-        gap: 100,
+        // alignSelf: "center",
+        // gap: 100,
         // marginBottom: 100,
         // alignSelf: "stretch",
         // display: "flex",
         
       },
     back: {
-    //   position: "absolute",
+      // position: "absolute",
+      // width: "90%",
+      position: 'absolute',
+      left: -20,
+      top: 2,
+
     },
     title: {
+      alignSelf: "center",
+      // alignItems: "center",
+      // flexDirection: 'row',
+      // position: "absolute",
       color: "black",
       fontSize: 30,
       fontWeight: "bold",
-      lineHeight: 122,
+      marginTop: -8,
+      // lineHeight: 122,
     //   position: "absolute",
 
     //   textAlign: "center",
@@ -149,6 +160,7 @@ const styles = StyleSheet.create({
     //   marginTop: 102,
     //   alignItems: "start",
     //   padding: "20px 60px 229px 20px",
+    paddingTop: 20,
     padding: 20,
     fontSize: 16,
     // marginBottom: 100,

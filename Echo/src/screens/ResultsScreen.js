@@ -29,7 +29,7 @@ const ResultsScreen = ({ navigation }) => {
         <Text style={styles.heading}>Happy</Text>
       </View>
       <View style={styles.info}>
-        <Text>
+        <Text style={styles.quip}>
            {/* Message depends on results on AI */}
           If you’re thriving and you know it clap your hands *clap clap*
         </Text>
@@ -107,6 +107,10 @@ const styles = StyleSheet.create({
     // fontFamily: "Nunito, sans-serif",
     // fontWeight: "400",
     fontSize: 16,
+  },
+  quip: {
+    textAlign: "center",
+    // alignSelf: "center"
   },
   details: {
     color: "black",
