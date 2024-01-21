@@ -97,23 +97,11 @@ const styles = StyleSheet.create({
     padding: 50,
   },
   header: {
-    // alignContent: "space-between",
     justifyContent: "center",
-    // alignItems: "center",
     flexDirection: 'row',
-    // position: "relative",
-    // textAlign: "center",
-    // alignSelf: "center",
-    // alignSelf: "center",
-    // gap: 100,
-    // marginBottom: 100,
-    // alignSelf: "stretch",
-    // display: "flex",
 
   },
   back: {
-    // position: "absolute",
-    // width: "90%",
     position: 'absolute',
     left: -20,
     top: 2,
@@ -148,11 +136,6 @@ const styles = StyleSheet.create({
     //   font: "600 18px/156% Nunito, sans-serif ",
   },
   question: {
-    //   color: "black",
-    //   textAlign: "center",
-    //   alignItems: "center",
-    // //   marginTop: 13,
-    //   fontSize: 26,
     marginBottom: 100,
     //   font: "500 25px/112% Nunito, sans-serif ",
   },
@@ -171,15 +154,9 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     borderRadius: 20,
     backgroundColor: "#F8F8F8",
-    //   alignSelf: "stretch",
-    //   marginTop: 102,
-    //   alignItems: "start",
-    //   padding: "20px 60px 229px 20px",
     paddingTop: 20,
     padding: 20,
     fontSize: 16,
-    // marginBottom: 100,
-    //   fontFamily: "Nunito, sans-serif",
   },
   analyzeButton: {
     color: "black",
@@ -189,7 +166,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     justifyContent: "center",
     alignItems: "center",
-    //   margin: "151px 0 7px",
     paddingTop: 12,
     paddingBottom: 12,
     fontSize: 22,
@@ -197,7 +173,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    // fontWeight: "bold",   
   }
 });
 

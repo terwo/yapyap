@@ -84,20 +84,15 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF",
         width: "100%",
         height: "100%",
-        // padding: 50,
     },
     header: {
         paddingTop: 40,
         width: "100%",
         backgroundColor: "#FFF",
-        // alignContent: "space-between",
         justifyContent: "center",
         alignItems: "center",
-        // alignSelf: "center",
         flexDirection: 'row',
-        // position: "absolute",
         alignSelf: "center",
-        // width: "100%",
         borderBottomWidth: 2,
         borderBottomColor: "#F9F9F9",
         gap: 100,
@@ -106,7 +101,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: "bold",
-        // lineHeight: 122,
     },
 
     // Additional styles if needed
