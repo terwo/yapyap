@@ -68,24 +68,6 @@ Resources:
             Path: /post-create
             Method: post
 
-  PostReadFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: PostReadFunction/
-      Handler: post_read.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - x86_64
-      Layers:
-      - !Ref MyLayer
-      - !Ref LibLayer
-      Events:
-        Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /post-read
-            Method: get
-
   ProfileCreateFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
