@@ -14,6 +14,9 @@ import {
     AccessibilityInfo
 } from "react-native";
 
+
+import login from '../../assets/images/loginscreen/login.png';
+
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -63,88 +66,153 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+
+            <Image
+                resizeMode="contain"
+                source={login}
+                style={styles.logo}
+            />
+
             <View style={styles.header}>
-                <Text style={styles.headerText}>Welcome to EchoYap</Text>
+                <Text style={styles.headerText}>yapyap</Text>
             </View>
 
-            <TextInput
-                placeholder="Username"
-                value={username}
-                onChangeText={setUsername}
-                style={styles.input}
-            />
-            <TextInput
-                placeholder="Password"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-                style={styles.input}
-            />
+            <View style={styles.fulllogin}>
 
-            <Button title="Login" onPress={handleLogin} />
-            <Button title="Create an Account" onPress={handleLogin} />
+            <View style={styles.inputs}>
+                <TextInput
+                    placeholder="Username"
+                    value={username}
+                    onChangeText={setUsername}
+                    style={styles.input}
+                />
+                <TextInput
+                    placeholder="Password"
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                    style={styles.input}
+                />
+            </View>
+
+
+            <View style={styles.buttons}>
+
+            <TouchableOpacity onPress={handleLogin}>
+                <View style={styles.login}>
+                <Text style={styles.loginText}>Login</Text>
+                </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={handleRegister}>
+                <View style={styles.create}>
+                <Text style={styles.createText}>Create an Account</Text>
+                </View>
+            </TouchableOpacity>
+
+            </View>
+
+            </View>
         </View>
     );
 };
 
+export default LoginScreen;
+
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#FFF",
-        display: "flex",
-        flex: 1,
-        maxWidth: 480,
-        width: "100%",
-        flexDirection: "column",
-        justifyContent: "space-around",
-        alignItems: "center",
-        marginHorizontal: "auto",
-        //   paddingBottom: 50,
-        //   paddingHorizontal: 60,
+  container: {
+    backgroundColor: "#FFF",
+    width: "100%",
+    height: "100%",
+    padding: 50,
+  },
+  logo: {
+    overflow: "hidden",
+    alignSelf: "center",
+    position: "relative",
+    display: "flex",
+    marginTop: 60,
+    width: 165,
+    maxWidth: "100%",
+    flexDirection: "column",
+    aspectRatio: "0.96",
+  },
+  header: {
+    color: "black",
+    textAlign: "center",
+    alignSelf: "center",
+    marginTop: 16,
+    whiteSpace: "nowrap",
+    // font: "700 40px/112.5% Nunito, sans-serif ",
+    marginBottom: 40,
+  },
+  headerText: {
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+
+  input: {
+    // color: "var(--black, #000C34)",
+    justifyContent: "center",
+    alignItems: "stretch",
+    borderRadius: 20,
+    backgroundColor: "#F8F8F8",
+    marginTop: 12,
+    padding: 20,
+    // font: "400 16px Nunito, sans-serif ",
+  },
+//   button: {
+//     color: "var(--Black, #271E53)",
+//     textAlign: "center",
+//     leadingTrim: "both",
+//     textEdge: "cap",
+//     fontVariantNumeric: "lining-nums tabular-nums",
+//     borderRadius: 30,
+//     backgroundColor: "#F28D62",
+//     marginTop: 118,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     padding: "15px 60px",
+//     font: "400 22px/127% Nunito, sans-serif ",
+//   },
+
+    inputs: {
+        gap: 20,
     },
-    header: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-    },
-    headerText: {
-        color: "#271E53", // Changed from CSS custom property to a hard-coded value
-        textAlign: "center",
-        letterSpacing: 1,
-        textTransform: "uppercase",
-        fontWeight: "bold",
-        alignSelf: "center",
-        fontFamily: "Nunito, sans-serif", // Make sure this font is imported or change it to a default font
-        fontSize: 40,
-    },
-    input: {
-        width: 200,
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 10,
-    },
+
     login: {
         color: "black",
-        textAlign: "center",
-        letterSpacing: "1px",
-        fontVariantNumeric: "lining-nums tabular-nums",
-        alignSelf: "center",
-        fontFamily: "Nunito, sans-serif",
-        fontSize: 22,
+      textAlign: "center",
+      borderRadius: 30,
+      backgroundColor: "#F28D62",
+      alignSelf: "stretch",
+      justifyContent: "center",
+      alignItems: "center",
+    //   margin: "151px 0 7px",
+    paddingTop: 12,
+    paddingBottom: 12,
+      fontSize: 22,
     },
-    loginText: {
-    },
-    createAccount: {
-        color: "black",
-        textAlign: "center",
-        letterSpacing: "1px",
-        fontVariantNumeric: "lining-nums tabular-nums",
-        whiteSpace: "nowrap",
-        fontFamily: "Nunito, sans-serif",
-        fontSize: 22,
-    },
-    createAccountText: {
-    },
-});
 
-export default LoginScreen;
+    create: {
+        color: "black",
+      textAlign: "center",
+      borderRadius: 30,
+      backgroundColor: "#FBFBFB",
+      alignSelf: "stretch",
+      justifyContent: "center",
+      alignItems: "center",
+    //   margin: "151px 0 7px",
+    paddingTop: 12,
+    paddingBottom: 12,
+      fontSize: 22,
+    },
+
+    buttons: {
+        gap: 20,
+    },
+
+    fulllogin: {
+        gap: 80,
+    }
+});

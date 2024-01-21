@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: "bold",
         lineHeight: 122,
-        fontFamily: "Nunito, sans-serif",
+        // fontFamily: "Nunito, sans-serif",
     },
     icon: {
         // overflow: "hidden",
@@ -141,18 +141,15 @@ const styles = StyleSheet.create({
     shareContainer: {
         color: "black",
         textAlign: "center",
-        // leadingTrim: "both",
-        // textEdge: "cap",
-        // fontVariantNumeric: "lining-nums tabular-nums",
         marginTop: -20,
         marginBottom: 100,
-        font: "500 25px/28px Nunito, sans-serif",
+        // font: "500 25px/28px Nunito, sans-serif",
     },
     shareText: {
         fontSize: 25,
         fontWeight: "bold",
         lineHeight: 28,
-        fontFamily: "Nunito, sans-serif",
+        // fontFamily: "Nunito, sans-serif",
         textAlign: "center",
     },
     image: {
