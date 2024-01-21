@@ -46,6 +46,21 @@ Resources:
             Path: /profile
             Method: get
 
+  ReactFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ReactFunction/
+      Handler: react.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Events:
+        Forum:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /react
+            Method: post
+
   SaveYapFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -84,6 +99,16 @@ Outputs:
   ProfileFunctionIamRole:
     Description: Implicit IAM Role created for Profile function
     Value: !GetAtt ProfileFunctionRole.Arn
+
+  React Api:
+    Description: API Gateway endpoint URL for Prod stage for React function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/react/"
+  ReactFunction:
+    Description: React Lambda Function ARN
+    Value: !GetAtt ReactFunction.Arn
+  ReactFunctionIamRole:
+    Description: Implicit IAM Role created for React function
+    Value: !GetAtt ReactFunctionRole.Arn
 
   SaveYapApi:
     Description: API Gateway endpoint URL for Prod stage for Save Yap function
