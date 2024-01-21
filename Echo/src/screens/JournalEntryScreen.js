@@ -30,6 +30,8 @@ const JournalEntryScreen = ({ navigation }) => {
         navigation.navigate('Loading')
     }
 
+
+    // NEED TO SAVE THE TEXT SUBMITTED AND SEND IT TO AI AND RESULTS!!
     const [value, onChangeText] = React.useState('YAP AWAY!!!');
 
     return (
@@ -60,14 +62,13 @@ const JournalEntryScreen = ({ navigation }) => {
         style={styles.textYap}
       />
         </View>
+        <TouchableOpacity onPress={callResults}>
         <View style={styles.analyzeButton}>
 
-        <TouchableOpacity onPress={callResults}>
         <Text style={styles.buttonText}>Next</Text>
-    </TouchableOpacity>
-
           
         </View>
+        </TouchableOpacity>
       </View>
     );
 };

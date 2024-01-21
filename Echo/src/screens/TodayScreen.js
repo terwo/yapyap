@@ -17,7 +17,7 @@ const TodayScreen = ({ navigation }) => {
     }
 
     const goNotifications = () => {
-        navigation.navigate('Notifications')
+        navigation.navigate('Results')
     }
 
     return (

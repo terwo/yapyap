@@ -21,6 +21,7 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import JournalEntryScreen from './src/screens/JournalEntryScreen';
 import NotificationsScreen from "./src/screens/NotificationsScreen";
 import LoadingScreen from "./src/screens/LoadingScreen";
+import ResultsScreen from "./src/screens/ResultsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Loading" component={LoadingScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Results" component={ResultsScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

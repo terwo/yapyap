@@ -21,19 +21,23 @@ const LoadingScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
 
-        backgroundColor: "#FFF",
-        width: "100%",
-        height: "100%",
-        padding: 50,
-
       backgroundColor: "#FFF",
-      display: "flex",
-      maxWidth: 480,
-      width: "100%",
-      flexDirection: "column",
-      alignItems: "stretch",
-      margin: "0 auto",
-      padding: 50,
+    width: "100%",
+    height: "100%",
+
+      //   backgroundColor: "#FFF",
+      //   width: "100%",
+      //   height: "100%",
+      //   padding: 50,
+
+      // backgroundColor: "#FFF",
+      // display: "flex",
+      // maxWidth: 480,
+      // width: "100%",
+      // flexDirection: "column",
+      // alignItems: "stretch",
+      // margin: "0 auto",
+      // padding: 50,
     },
     image: {
       overflow: "hidden",
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
       fontWeight: "500",
       fontSize: 25,
       lineHeight: 28,
-      fontFamily: "Nunito, sans-serif",
+      // fontFamily: "Nunito, sans-serif",
     },
   });
 
