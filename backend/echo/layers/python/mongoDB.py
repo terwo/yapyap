@@ -13,7 +13,7 @@ def get_client(atlas_uri: str) -> MongoClient:
 
 def add_user(atlas_uri: str, username: str, password:str) -> bool | None:
     """
-    Add a user to the database
+    Add a user to the database.
 
     Args:
         username (str): Unique username of the user.
