@@ -87,17 +87,26 @@ const styles = StyleSheet.create({
         // padding: 50,
     },
     header: {
-        alignContent: "space-between",
+        marginTop: 40,
+        width: "100%",
+        backgroundColor: "#FFF",
+        // alignContent: "space-between",
+        justifyContent: "center",
         alignItems: "center",
+        // alignSelf: "center",
         flexDirection: 'row',
         // position: "absolute",
         alignSelf: "center",
+        // width: "100%",
+        borderBottomWidth: 2,
+        borderBottomColor: "#F9F9F9",
         gap: 100,
+        paddingBottom: 10,
     },
     title: {
         fontSize: 30,
         fontWeight: "bold",
-        lineHeight: 122,
+        // lineHeight: 122,
     },
 
     // Additional styles if needed
