@@ -30,7 +30,7 @@ def add_user(atlas_uri: str, username: str, password:str) -> str | int:
     result = users.insert_one({
         "username": username,
         "password": password,
-        "avatar": AVATARS[random.randint(0, len(AVATARS))],
+        "avatar": AVATARS[random.randint(0, len(AVATARS) - 1)],
         "posts": []
     })            
 

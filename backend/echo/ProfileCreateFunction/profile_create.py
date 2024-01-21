@@ -10,17 +10,16 @@ def lambda_handler(event, context):
     Returns:
         Return a User Object.
     """
-
-    event = json.loads(event["body"])
-
+    event = json.loads(event["body"]) if "body" in event else event 
+    
     # authenticate the user
     if (username := event.get("username")) is None:
         return {
             "statusCode": 400,
             "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"message": "A username must be included"})
+            "body": json.dumps({"message": f"A username must be included {event}"})
         }
-    
+
     if (password := event.get("password")) is None:
         return {
             "statusCode": 400,
@@ -29,6 +28,7 @@ def lambda_handler(event, context):
         }
     
     result = add_user(os.environ.get("ATLAS_URI"), username, password)
+    
     if isinstance(result, str):
         return {
             "statusCode": 200,
