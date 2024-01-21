@@ -9,6 +9,7 @@ AVATARS = ["penguin", "duck", "pig", "bunny"]
 REACTIONS = ["heart", "high-five"]
 
 
+
 def get_client(atlas_uri: str) -> MongoClient:
     return MongoClient(host=atlas_uri)
 
@@ -128,8 +129,6 @@ def posted_today(atlas_uri: str, user_id: str) -> bool:
     if isinstance(result, dict):
         result["_id"] = str(result["_id"])
         result["user_id"] = str(result["user_id"])
-        del result["password"]
-        return result
     return None
 
 
