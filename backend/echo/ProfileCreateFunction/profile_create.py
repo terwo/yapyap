@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     """
 
     # authenticate the user
-    if not (username := event.get("username")):
+    if (username := event.get("username")) is None:
         return {
             "statusCode": 400,
             "headers": {"Content-Type": "application/json"},
