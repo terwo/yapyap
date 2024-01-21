@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import {
     FlatList,
     ScrollView,
@@ -14,57 +14,62 @@ import {
     AccessibilityInfo
 } from "react-native";
 
-import * as AuthSession from 'expo-auth-session';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
-import * as Random from 'expo-random';
-
 const LoginScreen = ({ navigation }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = async () => {
+        try {
+            console.log('Attempting to log in'); // Debugging log
+            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            console.log('Response:', data);
+            // if (data.token) {
+            //     await AsyncStorage.setItem('userToken', data.token);
+            //     // Navigate to your main app screen
+            //     navigation.navigate('Today');
+            // }
+            navigation.navigate('Today');
+        } catch (error) {
+            console.error('Login Error:', error);
+        }
+    };
 
 
 
-    // // Configurations for Auth0
-    // const auth0ClientId = 'g2B3Ebz84Lqqt8ox7dw2J2wCRxfSaLxC'; // Replace with your Auth0 client ID
-    // const auth0Domain = 'echo-dev.us.auth0.com'; // Replace with your Auth0 domain
 
-    // // Construct the authorization request
-    // const [request, response, promptAsync] = useAuthRequest({
-    //     redirectUri: makeRedirectUri({
-    //         // For development, the scheme will be 'exp'
-    //         native: 'yourapp://redirect', // Replace with your app's redirect scheme
-    //     }),
-    //     clientId: auth0ClientId,
-    //     responseType: 'id_token', // Token response type
-    //     scopes: ['openid', 'profile', 'email'], // Scopes
-    //     extraParams: {
-    //         nonce: getRandomNonce(), // A randomly generated nonce for security
-    //     },
-    // }, {
-    //     authorizationEndpoint: `${auth0Domain}/authorize`, // Auth0 authorization endpoint
-    // });
 
-    // // Random nonce generator
-    // function getRandomNonce() {
-    //     return Random.getRandomBytes(16).toString('hex');
-    // }
+    return (
+        <View style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>Welcome to EchoYap</Text>
+            </View>
 
-    // // Handle the authentication response
-    // React.useEffect(() => {
-    //     if (response?.type === 'success') {
-    //         const { id_token } = response.params;
-    //         // TODO: Handle the ID token (validate, extract user data, etc.)
-    //         // Navigate to the next screen or update the user context
-    //     }
-    // }, [response]);
+            <TextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={setUsername}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                style={styles.input}
+            />
 
-    // return (
-    //     <View style={styles.container}>
-    //         <View style={styles.header}>
-    //             <Text style={styles.headerText}>H1 Title</Text>
-    //         </View>
-    //         <Button title="Login with Auth0" onPress={() => promptAsync()} disabled={!request} />
-    //         {/* Other UI components */}
-    //     </View>
-    // );
+            <Button title="Login" onPress={handleLogin} />
+
+            <View style={styles.createAccount}>
+                <Text style={styles.createAccountText}>Create Account</Text>
+            </View>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
@@ -87,14 +92,21 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     headerText: {
-        color: "#271E53",
+        color: "#271E53", // Changed from CSS custom property to a hard-coded value
         textAlign: "center",
         letterSpacing: 1,
         textTransform: "uppercase",
         fontWeight: "bold",
         alignSelf: "center",
-        fontFamily: "Nunito, sans-serif",
+        fontFamily: "Nunito, sans-serif", // Make sure this font is imported or change it to a default font
         fontSize: 40,
+    },
+    input: {
+        width: 200,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 10,
     },
     login: {
         color: "black",
