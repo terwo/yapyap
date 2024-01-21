@@ -31,6 +31,21 @@ Resources:
             Path: /forum
             Method: get
 
+  PostCreateFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: PostCreateFunction/
+      Handler: post_create.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Events:
+        Forum:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /post-create
+            Method: post
+
   PostReadFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -76,11 +91,11 @@ Resources:
             Path: /react
             Method: post
 
-  PostCreateFunction:
+  UndoReactFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: PostCreateFunction/
-      Handler: post_create.lambda_handler
+      CodeUri: UndoReactFunction/
+      Handler: undo_react.lambda_handler
       Runtime: python3.11
       Architectures:
       - x86_64
@@ -88,8 +103,10 @@ Resources:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /post-create
+            Path: /undo-react
             Method: post
+
+
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -144,3 +161,13 @@ Outputs:
   ReactFunctionIamRole:
     Description: Implicit IAM Role created for React function
     Value: !GetAtt ReactFunctionRole.Arn
+
+  UndoReactApi:
+    Description: API Gateway endpoint URL for Prod stage for Undo React function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/undo-react/"
+  UndoReactFunction:
+    Description: Undo React Lambda Function ARN
+    Value: !GetAtt Undo ReactFunction.Arn
+  UndoReactFunctionIamRole:
+    Description: Implicit IAM Role created for Undo React function
+    Value: !GetAtt Undo ReactFunctionRole.Arn
