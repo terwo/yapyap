@@ -39,9 +39,27 @@ const LoginScreen = ({ navigation }) => {
         }
     };
 
-
-
-
+    const handleRegister = async () => {
+        try {
+            console.log('Attempting to create an account'); // Debugging log
+            // change api endpoint below
+            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            console.log('Response:', data);
+            // if (data.token) {
+            //     await AsyncStorage.setItem('userToken', data.token);
+            //     // Navigate to your main app screen
+            //     navigation.navigate('Today');
+            // }
+            navigation.navigate('Today');
+        } catch (error) {
+            console.error('Account Creation Error:', error);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -64,10 +82,7 @@ const LoginScreen = ({ navigation }) => {
             />
 
             <Button title="Login" onPress={handleLogin} />
-
-            <View style={styles.createAccount}>
-                <Text style={styles.createAccountText}>Create Account</Text>
-            </View>
+            <Button title="Create an Account" onPress={handleLogin} />
         </View>
     );
 };
