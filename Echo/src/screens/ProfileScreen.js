@@ -15,7 +15,7 @@ const ProfileScreen = () => {
                 const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-read');
                 const data = await response.json();
                 // log what journalEntries were before
-                console.log(data);
+                console.log(await response.text());
                 setUser(data); // Assuming the response has a user object
                 setJournalEntries(data.posts); // Assuming user has journalEntries
             } catch (error) {

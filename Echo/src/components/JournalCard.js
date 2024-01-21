@@ -21,7 +21,27 @@ const JournalCard = ({ entry, handleEmojiPress }) => {
             <Text style={styles.contentText}>{entry.content}</Text>
             <View style={styles.emojiContainer}>
                 <EmojiButton
-                    emojiImage={entry.emojiImage}
+                    emojiImage={muchlove}
+                    count={entry.emojiCount}
+                    onPress={() => handleEmojiPress(entry.id, 'emojiType')}
+                />
+                <EmojiButton
+                    emojiImage={babel}
+                    count={entry.emojiCount}
+                    onPress={() => handleEmojiPress(entry.id, 'emojiType')}
+                />
+                <EmojiButton
+                    emojiImage={samehere}
+                    count={entry.emojiCount}
+                    onPress={() => handleEmojiPress(entry.id, 'emojiType')}
+                />
+                <EmojiButton
+                    emojiImage={staystrong}
+                    count={entry.emojiCount}
+                    onPress={() => handleEmojiPress(entry.id, 'emojiType')}
+                />
+                <EmojiButton
+                    emojiImage={youdeserveit}
                     count={entry.emojiCount}
                     onPress={() => handleEmojiPress(entry.id, 'emojiType')}
                 />
