@@ -31,6 +31,21 @@ Resources:
             Path: /forum
             Method: get
 
+  PostFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: PostFunction/
+      Handler: post.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Events:
+        Forum:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /post
+            Method: get
+
   ProfileFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
@@ -89,6 +104,16 @@ Outputs:
   ForumFunctionIamRole:
     Description: Implicit IAM Role created for Forum function
     Value: !GetAtt ForumFunctionRole.Arn
+
+  PostApi:
+    Description: API Gateway endpoint URL for Prod stage for Post function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post/"
+  PostFunction:
+    Description: Post Lambda Function ARN
+    Value: !GetAtt PostFunction.Arn
+  PostFunctionIamRole:
+    Description: Implicit IAM Role created for Post function
+    Value: !GetAtt PostFunctionRole.Arn
 
   ProfileApi:
     Description: API Gateway endpoint URL for Prod stage for Profile function
