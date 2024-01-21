@@ -13,6 +13,7 @@ import {
     Linking,
     AccessibilityInfo
 } from "react-native";
+import { useFonts } from 'expo-font';
 
 
 import login from '../../assets/images/loginscreen/login.png';
@@ -20,6 +21,9 @@ import login from '../../assets/images/loginscreen/login.png';
 const LoginScreen = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [fontsLoaded, fontError] = useFonts({
+        'Nunito': require('../../assets/fonts/Nunito-Regular.ttf'),
+    });
 
     const handleLogin = async () => {
         try {
@@ -157,12 +161,12 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop: 16,
         whiteSpace: "nowrap",
-        // font: "700 40px/112.5% Nunito, sans-serif ",
+        fontFamily: "Nunito",
         marginBottom: 40,
     },
     headerText: {
         fontSize: 40,
-        fontWeight: "bold",
+        fontFamily: "Nunito",
     },
 
     input: {
@@ -173,7 +177,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F8F8F8",
         marginTop: 12,
         padding: 20,
-        // font: "400 16px Nunito, sans-serif ",
+        fontFamily: "Nunito",
     },
     //   button: {
     //     color: "var(--Black, #271E53)",

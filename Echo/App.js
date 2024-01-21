@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from 'react';
 import {
   FlatList,
   ScrollView,
@@ -12,6 +12,8 @@ import {
   Linking,
   AccessibilityInfo
 } from "react-native";
+import * as Font from 'expo-font';
+
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -27,6 +29,19 @@ import ResultsScreen from "./src/screens/ResultsScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  useEffect(() => {
+    async function loadFont() {
+      await Font.loadAsync({
+        'custom-font': require('./assets/fonts/Nunito-Regular.ttf'),
+      });
+
+      Text.defaultProps.style.fontFamily = 'custom-font';
+    }
+
+    loadFont();
+  }, []);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
