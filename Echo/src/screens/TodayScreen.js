@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 30,
         fontWeight: "bold",
-        lineHeight: 123,
+        lineHeight: 122,
         fontFamily: "Nunito, sans-serif",
     },
     icon: {

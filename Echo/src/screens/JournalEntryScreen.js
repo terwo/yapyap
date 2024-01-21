@@ -48,8 +48,9 @@ const JournalEntryScreen = ({ navigation }) => {
           <TextInput
         editable
         multiline
-        numberOfLines={12}
-        maxLength={40}
+        numberOfLines={14}
+        maxLength={300}
+        // placeholderTextColor={black}
         onChangeText={text => onChangeText(text)}
         value={value}
         style={styles.textYap}
@@ -75,7 +76,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flexDirection: 'row',
         position: "absolute",
+        // textAlign: "center",
         alignSelf: "center",
+        // alignSelf: "center",
         gap: 100,
         // marginBottom: 100,
         // alignSelf: "stretch",
@@ -83,25 +86,17 @@ const styles = StyleSheet.create({
         
       },
     back: {
-    //   justifyContent: "center",
-    //   alignItems: "center",
-    //   overflow: "hidden",
-    //   position: "relative",
-    //   display: "flex",
-    //   width: 24,
-    //   flexShrink: 0,
-    //   maxWidth: "100%",
-    //   flexDirection: "column",
-    //   aspectRatio: 1,
+    //   position: "absolute",
     },
     title: {
       color: "black",
       fontSize: 30,
       fontWeight: "bold",
-      lineHeight: 123,
+      lineHeight: 122,
+    //   position: "absolute",
+
     //   textAlign: "center",
     //   alignSelf: "center",
-      fontWeight: "bold",
     //   flexGrow: 1,
     //   whiteSpace: "nowrap",
     //   margin: "auto 0",
@@ -122,7 +117,7 @@ const styles = StyleSheet.create({
     //   alignItems: "center",
     // //   marginTop: 13,
     //   fontSize: 26,
-      marginBottom: 150,
+      marginBottom: 100,
     //   font: "500 25px/112% Nunito, sans-serif ",
     },
     questionText: {
@@ -137,6 +132,7 @@ const styles = StyleSheet.create({
     },
     textYap: {
     //   color: "black",
+    textAlignVertical: 'top',
       borderRadius: 20,
       backgroundColor: "#F8F8F8",
     //   alignSelf: "stretch",
