@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import {
     FlatList,
     ScrollView,
@@ -15,15 +15,56 @@ import {
 } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleLogin = async () => {
+        try {
+            console.log('Attempting to log in'); // Debugging log
+            const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/profile-create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+            });
+            const data = await response.json();
+            console.log('Response:', data);
+            // if (data.token) {
+            //     await AsyncStorage.setItem('userToken', data.token);
+            //     // Navigate to your main app screen
+            //     navigation.navigate('Today');
+            // }
+            navigation.navigate('Today');
+        } catch (error) {
+            console.error('Login Error:', error);
+        }
+    };
+
+
+
+
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Text style={styles.headerText}>H1 Title</Text>
+                <Text style={styles.headerText}>Welcome to EchoYap</Text>
             </View>
-            <Button title="Go to Today" onPress={() => navigation.navigate('Today')} />
-            <View style={styles.login}>
-                <Text style={styles.loginText}>Login</Text>
-            </View>
+
+            <TextInput
+                placeholder="Username"
+                value={username}
+                onChangeText={setUsername}
+                style={styles.input}
+            />
+            <TextInput
+                placeholder="Password"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+                style={styles.input}
+            />
+
+            <Button title="Login" onPress={handleLogin} />
+
             <View style={styles.createAccount}>
                 <Text style={styles.createAccountText}>Create Account</Text>
             </View>
@@ -59,6 +100,13 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         fontFamily: "Nunito, sans-serif", // Make sure this font is imported or change it to a default font
         fontSize: 40,
+    },
+    input: {
+        width: 200,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 10,
     },
     login: {
         color: "black",
