@@ -14,6 +14,8 @@ ML Model: Bidirectional RNN made with TensorFlow
 ![Add _ input entry](https://github.com/terwo/yapyap/assets/105677497/38992970-70fa-421f-aba7-d1a4b9a8c27a)
 ![Add _ Mood result _ Happy](https://github.com/terwo/yapyap/assets/105677497/101a3a18-4648-4dc8-91b7-fbc59a824685)
 ![Today (Populated FINAL)](https://github.com/terwo/yapyap/assets/105677497/dd388b7a-9022-45e9-a070-1e8335e26435)
+![Profile](https://github.com/terwo/yapyap/assets/105677497/2af0a505-09b8-49c2-af3b-7b84c5d71611)
+
 
 
 # Post-POC
