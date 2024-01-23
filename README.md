@@ -6,9 +6,9 @@ yapyap is a community-driven anonymous journalling social media app, placing val
 This is the winning project of the Community and Connection Track and Best Design Award of nwHacks 2024. I created the AI model to analyze sentiments, and co-developed the frontend.
 
 # Tech Stack
-Frontend: React Native, Expo
-Backend: Amazon API Gateway, AWS Lambda, MongoDB Atlas
-ML Model: Bidirectional RNN made with TensorFlow
+* Frontend: React Native, Expo
+* Backend: Amazon API Gateway, AWS Lambda, MongoDB Atlas
+* ML Model: Bidirectional RNN made with TensorFlow
 
 # Screenshots of UI
 ![Add _ input entry](https://github.com/terwo/yapyap/assets/105677497/38992970-70fa-421f-aba7-d1a4b9a8c27a)
