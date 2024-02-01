@@ -79,6 +79,10 @@ Resources:
       Layers:
       - !Ref MyLayer
       - !Ref LibLayer
+      Environment:
+        Variables:
+          PYMONGO_USR: !Ref PYMONGO_USR
+          PYMONGO_PWD: !Ref PYMONGO_PWD
       Events:
         Forum:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

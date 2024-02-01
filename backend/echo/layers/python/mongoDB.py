@@ -9,8 +9,8 @@ AVATARS = ["penguin", "duck", "pig", "bunny"]
 REACTIONS = ["heart", "high-five"]
 
 
-
-def get_client(atlas_uri: str) -> MongoClient:
+def get_client(mongo_usr: str, mongo_pwd: str) -> MongoClient:
+    atlas_uri = f"mongodb+srv://{mongo_usr}:{mongo_pwd}@echodev.xuwka1h.mongodb.net/?retryWrites=true&w=majority"
     return MongoClient(host=atlas_uri)
 
 
@@ -22,19 +22,20 @@ def find_user_by_user_id(atlas_uri: str, user_id: str):
     return result if isinstance(result, dict) else False
  
 
-def add_user(atlas_uri: str, username: str, password:str) -> str | int:
+def add_user(mongo_usr: str, mongo_pwd: str, username: str, password:str) -> str | int:
     """
     Add a user to the database.
 
     Args:
-        atlas_uri (str): URI to the datebase.
+        mongo_usr (str): MongoDB username to access to the datebase.
+        mongo_pwd (str): MongoDB password to access to the datebase.
         username (str): Unique username of the user.
         password (str): Password for the user.
 
     Returns:
         bool | None: True if inserted, False if not. None if the username already exists.
     """
-    client = get_client(atlas_uri)
+    client = get_client(mongo_usr, mongo_pwd)
     users = client.EchoDev.users
 
     if users.find_one({"username": username}) is not None:

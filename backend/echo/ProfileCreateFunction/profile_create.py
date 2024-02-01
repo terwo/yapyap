@@ -27,7 +27,12 @@ def lambda_handler(event, context):
             "body": json.dumps({"message": "A password must be included"})
         }
     
-    result = add_user(os.environ.get("ATLAS_URI"), username, password)
+    result = add_user(
+        os.environ.get("PYMONGO_USR"), 
+        os.environ.get("PYMONGO_PWD"), 
+        username, 
+        password
+    )
     
     if isinstance(result, str):
         return {
