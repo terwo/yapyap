@@ -29,8 +29,8 @@ jobs:
 
       - name: SAM Deploy
         env:
-          - MONGO_DB_ID: ${{ secrets.MONGO_DB_ID }}
-          - MONGO_DB_PWD: ${{ secrets.MONGO_DB_PWD }}
+          MONGO_DB_ID: ${{ secrets.MONGO_DB_ID }}
+          MONGO_DB_PWD: ${{ secrets.MONGO_DB_PWD }}
         run: >- 
           sam deploy 
           --no-confirm-changeset 
