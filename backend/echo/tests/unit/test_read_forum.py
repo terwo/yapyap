@@ -3,10 +3,10 @@ import json
 from .utils import invoke_function
 
 
-EVENTS_DIR = "./tests/events/read_profile_events/"
+EVENTS_DIR = "./tests/events/read_forum_events/"
 
 
-class TestReadProfile:
+class TestReadForum:
     """
     Unit tests for the Read Profile lambda function.
     """    
@@ -66,5 +66,3 @@ class TestReadProfile:
 
         assert body.get("message", "") == "Data recieved: user_id=test_event_id. " \
                                           + "NOTE: This data does not come from a database."
-        assert body.get("avatar", "") == "duck"
-        assert body.get("posts") == []
