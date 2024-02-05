@@ -31,12 +31,12 @@ jobs:
         env:
           - MONGO_DB_ID: ${{ secrets.MONGO_DB_ID }}
           - MONGO_DB_PWD: ${{ secrets.MONGO_DB_PWD }}
-      - run: >- 
+        run: >- 
           sam deploy 
           --no-confirm-changeset 
           --no-fail-on-empty-changeset 
           --stack-name echo 
           --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-x1hyuw3b97o4 
           --capabilities CAPABILITY_IAM 
-          --parameter-overrides MongoDBId=$MONGO_DB_ID,MongoDBPwd=$MONGO_DB_PWD
+          --parameter-overrides ParameterKey=MongoDBId,ParameterValue=$MONGO_DB_ID ParmeterKey=MongoDBPwd,ParameterValue=$MONGO_DB_PWD ParameterKey=Env,ParameterValue=DEV
           --region us-west-2
