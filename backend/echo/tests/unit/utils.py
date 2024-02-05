@@ -20,8 +20,9 @@ def invoke_function(
     output = subprocess.run(
         ["sam", "local", "invoke", function_name, "--env-vars", env_vars_path, "-e", event_path],
         shell=True,
-    capture_output=True
+        capture_output=True
     )
+    print(output.stdout)
     try:
         return json.loads(output.stdout.decode("utf-8"))
     except Exception as e:

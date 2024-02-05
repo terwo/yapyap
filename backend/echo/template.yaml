@@ -99,6 +99,29 @@ Resources:
             Path: /create-reaction
             Method: post
 
+  LoginFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: LoginFunction/
+      Handler: login.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: post
+  
   ReadForumFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -195,6 +218,16 @@ Outputs:
   CreateReactionFunctionIamRole:
     Description: Implicit IAM Role created for Create Reaction function
     Value: !GetAtt CreateReactionFunctionRole.Arn
+  
+  LoginApi:
+    Description: API Gateway endpoint URL for Prod stage for Login function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/login/"
+  LoginFunction:
+    Description: Login Lambda Function ARN
+    Value: !GetAtt LoginFunction.Arn
+  LoginFunctionIamRole:
+    Description: Implicit IAM Role created for Login function
+    Value: !GetAtt LoginFunctionRole.Arn
   
   ReadForumApi:
     Description: API Gateway endpoint URL for Prod stage for Read Forum function
