@@ -1,18 +1,12 @@
 {
-  "body": "{\"username\": \"John\", \"password\": \"123\"}",
-  "resource": "/profile-create",
-  "path": "/profile-create",
+  "body": "{\"username\": \"test_event_username\",\"password\": \"test_event_password\"}",
+  "resource": "/create-profile",
+  "path": "/create-profile",
   "httpMethod": "POST",
   "isBase64Encoded": false,
-  "queryStringParameters": {
-    "foo": "bar"
-  },
-  "pathParameters": {
-    "proxy": "/path/to/resource"
-  },
-  "stageVariables": {
-    "baz": "qux"
-  },
+  "queryStringParameters": {},
+  "pathParameters": {},
+  "stageVariables": {},
   "headers": {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Encoding": "gzip, deflate, sdch",
@@ -53,8 +47,8 @@
       "userAgent": "Custom User Agent String",
       "user": null
     },
-    "path": "/prod/profile-create",
-    "resourcePath": "/profile-create",
+    "path": "/prod/create-profile",
+    "resourcePath": "/create-profile",
     "httpMethod": "POST",
     "apiId": "1234567890",
     "protocol": "HTTP/1.1"
