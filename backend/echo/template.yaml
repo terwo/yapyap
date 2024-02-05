@@ -2,10 +2,8 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   echo
+  SAM Template for echo
 
-  Sample SAM Template for echo
-
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 60
@@ -54,6 +52,7 @@ Resources:
           Properties:
             Path: /create-post
             Method: post
+  
   CreateProfileFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -77,6 +76,29 @@ Resources:
             Path: /create-profile
             Method: post
 
+  ReadProfileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ReadProfileFunction/
+      Handler: read_profile.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /read-profile
+            Method: get
+
 Parameters:
   MongoDBId:
     Type: String
@@ -86,9 +108,6 @@ Parameters:
     Type: String
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   MyLayer:
     Description: "Local Packages Layer"
     Value: !Ref MyLayer
@@ -120,3 +139,13 @@ Outputs:
   CreateProfileFunctionIamRole:
     Description: Implicit IAM Role created for Create Profile function
     Value: !GetAtt CreateProfileFunctionRole.Arn
+
+  ReadProfileApi:
+    Description: API Gateway endpoint URL for Prod stage for Create Read function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/read-profile/"
+  ReadProfileFunction:
+    Description: Read Profile Lambda Function ARN
+    Value: !GetAtt ReadProfileFunction.Arn
+  ReadProfileFunctionIamRole:
+    Description: Implicit IAM Role created for Read Profile function
+    Value: !GetAtt ReadProfileFunctionRole.Arn
