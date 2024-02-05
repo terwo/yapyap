@@ -1,6 +1,9 @@
 import json
 
-from request_validation import extract_body_from_request
+from request_validation import (
+    extract_body_from_request,
+    extract_value_from_body
+)
 
 
 def lambda_handler(event, context):
@@ -24,30 +27,14 @@ def lambda_handler(event, context):
             )
         }   
 
-
     # authenticate the body
-    if (username := event.get("username")) is None:
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(
-                {
-                    "message": "A username must be included in " 
-                                + "the request body"
-                }
-            )
-        }
-    if (password := event.get("password")) is None:
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(
-                {
-                    "message": "A password must be included " 
-                                + "in the request body"
-                }
-            )
-        }
+    status, username = extract_value_from_body(event, "username")
+    if not status:
+        return username
+    
+    status, password = extract_value_from_body(event, "password")
+    if not status:
+        return password
     
     #TODO: check if username already exists
     #TODO: check for a strong password 

@@ -1,8 +1,10 @@
 import json
 
 from mongo_db import create_post
-from request_validation import extract_body_from_request
-
+from request_validation import (
+    extract_body_from_request,
+    extract_value_from_body
+)
 
 def lambda_handler(event, context):
     """
@@ -25,32 +27,14 @@ def lambda_handler(event, context):
             )
         }   
 
-
-    # authenticate the user
-    if (user_id := event.get("user_id")) is None:
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(
-                {
-                    "message": "A user_id must be included in " 
-                                + "the request body"
-                }
-            )
-        }
+    # validate the event body
+    status, user_id = extract_value_from_body(event, "user_id")
+    if not status:
+        return user_id
     
-    # validate the journal entry
-    if (journal_entry := event.get("journal_entry")) is None:
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(
-                {
-                    "message": "A journal_entry must be included " 
-                                + "in the request body"
-                }
-            )
-        }
+    status, journal_entry = extract_value_from_body(event, "journal_entry")
+    if not status:
+        return journal_entry
     
     #TODO write to database
     

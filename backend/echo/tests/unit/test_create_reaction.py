@@ -3,12 +3,12 @@ import json
 from .utils import invoke_function
 
 
-EVENTS_DIR = "./tests/events/create_profile_events/"
+EVENTS_DIR = "./tests/events/create_reaction_events/"
 
 
-class TestCreateProfile:
+class TestCreateReaction:
     """
-    Unit tests for the Create Profile lambda function.
+    Unit tests for the Create Reaction lambda function.
     """    
     
     def get_response(self, event_name: str) -> dict:
@@ -23,15 +23,15 @@ class TestCreateProfile:
             dict: HTTP response.
         """
         response = invoke_function(
-            "CreateProfileFunction",
+            "CreateReactionFunction",
             EVENTS_DIR + f"{event_name}_event.json"    
         )
         if isinstance(response, int):
             assert False # something went wrong!
         return response    
-    
+        
     def test_empty_body_event(self):
-        response = self.get_response("empty_body")        
+        response = self.get_response("empty_body")                
         assert response.get("statusCode", 0) == 400
         try:
             body = json.loads(response.get("body"))
@@ -41,10 +41,10 @@ class TestCreateProfile:
 
         assert body.get("message", "") == "Invalid request body! " \
                                           + "Request must have a body with "\
-                                          + "the username and the password"
+                                          + "the user_id, post_id and reaction."
 
-    def test_missing_username_event(self):
-        response = self.get_response("missing_username")        
+    def test_missing_user_id_event(self):
+        response = self.get_response("missing_user_id")                
         assert response.get("statusCode", 0) == 400
         try:
             body = json.loads(response.get("body"))
@@ -52,11 +52,11 @@ class TestCreateProfile:
             print(e)
             assert False
 
-        assert body.get("message", "") == "A username must be included " \
+        assert body.get("message", "") == "A user_id must be included " \
                                           + "in the request body."
             
-    def test_missing_password_event(self):
-        response = self.get_response("missing_password")                
+    def test_missing_post_id_event(self):
+        response = self.get_response("missing_post_id")                
         assert response.get("statusCode", 0) == 400
         try:
             body = json.loads(response.get("body"))
@@ -64,19 +64,20 @@ class TestCreateProfile:
             print(e)
             assert False
 
-        assert body.get("message", "") == "A password must be included " \
+        assert body.get("message", "") == "A post_id must be included " \
                                           + "in the request body."
 
+    def test_missing_reaction_event(self):
+        response = self.get_response("missing_reaction")                
+        assert response.get("statusCode", 0) == 400
+        try:
+            body = json.loads(response.get("body"))
+        except Exception as e:
+            print(e)
+            assert False
+
+        assert body.get("message", "") == "A reaction must be included " \
+                                          + "in the request body."
     def test_valid_event(self):
         response = self.get_response("valid")        
         assert response.get("statusCode", 0) == 200
-        try:
-            body = json.loads(response.get("body"))
-        except Exception as e:
-            print(e)
-            assert False
-
-        assert body.get("message", "") == "Data recieved: username=test_event_username; " \
-                                          + "password=test_event_password. " \
-                                          + "NOTE: This data is not being " \
-                                          + "written to a database."

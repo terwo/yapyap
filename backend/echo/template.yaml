@@ -76,6 +76,29 @@ Resources:
             Path: /create-profile
             Method: post
 
+  CreateReactionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CreateReactionFunction/
+      Handler: create_reaction.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /create-reaction
+            Method: post
+
   ReadForumFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -163,6 +186,16 @@ Outputs:
     Description: Implicit IAM Role created for Create Profile function
     Value: !GetAtt CreateProfileFunctionRole.Arn
 
+  CreateReactionApi:
+    Description: API Gateway endpoint URL for Prod stage for Create Reaction function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create-reaction/"
+  CreateReactionFunction:
+    Description: Create Reaction Lambda Function ARN
+    Value: !GetAtt CreateReactionFunction.Arn
+  CreateReactionFunctionIamRole:
+    Description: Implicit IAM Role created for Create Reaction function
+    Value: !GetAtt CreateReactionFunctionRole.Arn
+  
   ReadForumApi:
     Description: API Gateway endpoint URL for Prod stage for Read Forum function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/read-forum/"

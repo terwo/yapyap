@@ -53,7 +53,7 @@ class TestCreatePost:
             assert False
 
         assert body.get("message", "") == "A user_id must be included " \
-                                          + "in the request body"
+                                          + "in the request body."
             
     def test_missing_journal_entry_event(self):
         response = self.get_response("missing_journal_entry")                
@@ -65,7 +65,7 @@ class TestCreatePost:
             assert False
 
         assert body.get("message", "") == "A journal_entry must be included " \
-                                          + "in the request body"
+                                          + "in the request body."
 
     def test_valid_event(self):
         response = self.get_response("valid")        
