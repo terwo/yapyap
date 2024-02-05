@@ -9,7 +9,7 @@ const LoadingScreen = ({ navigation }) => {
 
     setTimeout(() => {
         navigation.navigate('Results')
-    }, 3000);
+    }, 5000);
 
     return (
         <View style={styles.container}>

@@ -125,7 +125,7 @@ const ResultsScreen = ({ route, navigation }) => {
           {/* Should take message from Journal Entry Screen AND ALSO SAVE IT! */}
 
           {/* replace with post.journal_entry */}
-          Going to my first 24hr hackathon today! excited to met people and have a good time
+          Going to my first 24hr hackathon today! excited to meet people and have a good time
         </Text>
       </View>
 

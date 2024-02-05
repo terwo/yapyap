@@ -176,12 +176,12 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginTop: 16,
         whiteSpace: "nowrap",
-        fontFamily: "Nunito",
+        // fontFamily: "Nunito",
         marginBottom: 40,
     },
     headerText: {
         fontSize: 40,
-        fontFamily: "Nunito",
+        // fontFamily: "Nunito",
     },
 
     input: {
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#F8F8F8",
         marginTop: 12,
         padding: 20,
-        fontFamily: "Nunito",
+        // fontFamily: "Nunito",
     },
 
     inputs: {
