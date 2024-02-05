@@ -45,6 +45,7 @@ Resources:
       - !Ref LibLayer
       Environment:
         Variables:
+          ENV: !Ref Env
           MONGO_DB_ID: !Ref MongoDBId
           MONGO_DB_PWD: !Ref MongoDBPwd
       Events:
@@ -66,6 +67,7 @@ Resources:
       - !Ref LibLayer
       Environment:
         Variables:
+          ENV: !Ref Env
           MONGO_DB_ID: !Ref MongoDBId
           MONGO_DB_PWD: !Ref MongoDBPwd
       Events:
@@ -79,7 +81,9 @@ Parameters:
   MongoDBId:
     Type: String
   MongoDBPwd:
-    Type String
+    Type: String
+  Env:
+    Type: String
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
