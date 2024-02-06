@@ -1,9 +1,7 @@
 on:
   push:
     branches:
-      - main
       - backend-sam*
-      # - deploy
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -30,7 +28,7 @@ jobs:
       - name: SAM Deploy
         env:
           MONGO_DB_ID: ${{ secrets.MONGO_DB_ID }}
-          MONGO_DB_PWD: ${{ secrets.MONGO_DB_PWD }}
+          MONGO_DB_PWD: ${{ secrets.MONGO_DB_PASSWORD }}
         run: >- 
           sam deploy 
           --no-confirm-changeset 
