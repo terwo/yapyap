@@ -1,7 +1,6 @@
 on:
   push:
     branches:
-      - main
       - backend-sam*
 jobs:
   build-deploy:
@@ -15,10 +14,27 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-west-2
-      # sam build
-      - run: sam build --use-container --region us-west-2 --config-file ../../backend/echo/samconfig.toml --template-file ./backend/echo/template.yaml
+      
+      - name: SAM Build
+        run: >- 
+          sam build 
+          --use-container 
+          --region us-west-2 
+          --config-file ../../backend/echo/samconfig.toml 
+          --template-file ./backend/echo/template.yaml
 
 # Run Unit tests- Specify unit tests here
 
-# sam deploy
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name echo --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-x1hyuw3b97o4 --capabilities CAPABILITY_IAM --region us-west-2
+      - name: SAM Deploy
+        env:
+          MONGO_DB_ID: ${{ secrets.MONGO_DB_ID }}
+          MONGO_DB_PWD: ${{ secrets.MONGO_DB_PASSWORD }}
+        run: >- 
+          sam deploy 
+          --no-confirm-changeset 
+          --no-fail-on-empty-changeset 
+          --stack-name echo 
+          --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-x1hyuw3b97o4 
+          --capabilities CAPABILITY_IAM 
+          --parameter-overrides ParameterKey=MongoDBId,ParameterValue=$MONGO_DB_ID ParameterKey=MongoDBPwd,ParameterValue=$MONGO_DB_PWD ParameterKey=Env,ParameterValue=DEV
+          --region us-west-2

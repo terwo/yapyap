@@ -2,14 +2,12 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   echo
+  SAM Template for echo
 
-  Sample SAM Template for echo
-
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 30
-    MemorySize: 128
+    Timeout: 60
+    MemorySize: 256
 
     Tracing: Active
   Api:
@@ -32,118 +30,153 @@ Resources:
     Metadata:
       BuildMethod: python3.11
 
-  ForumFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  CreatePostFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ForumFunction/
-      Handler: forum.lambda_handler
+      CodeUri: CreatePostFunction/
+      Handler: create_post.lambda_handler
       Runtime: python3.11
       Architectures:
       - x86_64
       Layers:
       - !Ref MyLayer
       - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
       Events:
         Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /forum
+            Path: /create-post
+            Method: post
+  
+  CreateProfileFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CreateProfileFunction/
+      Handler: create_profile.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /create-profile
+            Method: post
+
+  CreateReactionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CreateReactionFunction/
+      Handler: create_reaction.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /create-reaction
+            Method: post
+
+  LoginFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: LoginFunction/
+      Handler: login.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /login
+            Method: post
+  
+  ReadForumFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ReadForumFunction/
+      Handler: read_forum.lambda_handler
+      Runtime: python3.11
+      Architectures:
+      - x86_64
+      Layers:
+      - !Ref MyLayer
+      - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
+      Events:
+        Forum:
+          Type: Api
+          Properties:
+            Path: /read-forum
             Method: get
 
-  PostCreateFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  ReadProfileFunction:
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: PostCreateFunction/
-      Handler: post_create.lambda_handler
+      CodeUri: ReadProfileFunction/
+      Handler: read_profile.lambda_handler
       Runtime: python3.11
       Architectures:
       - x86_64
       Layers:
       - !Ref MyLayer
       - !Ref LibLayer
+      Environment:
+        Variables:
+          ENV: !Ref Env
+          MONGO_DB_ID: !Ref MongoDBId
+          MONGO_DB_PWD: !Ref MongoDBPwd
       Events:
         Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /post-create
-            Method: post
-
-  ProfileCreateFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: ProfileCreateFunction/
-      Handler: profile_create.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - x86_64
-      Layers:
-      - !Ref MyLayer
-      - !Ref LibLayer
-      Events:
-        Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /profile-create
-            Method: post
-
-  ProfileReadFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: ProfileReadFunction/
-      Handler: profile_read.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - x86_64
-      Layers:
-      - !Ref MyLayer
-      - !Ref LibLayer
-      Events:
-        Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /profile-read
+            Path: /read-profile
             Method: get
 
-  ReactFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: ReactFunction/
-      Handler: react.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - x86_64 
-      Layers:
-      - !Ref MyLayer
-      - !Ref LibLayer
-      Events:
-        Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /react
-            Method: post
-
-  UndoReactFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Properties:
-      CodeUri: UndoReactFunction/
-      Handler: undo_react.lambda_handler
-      Runtime: python3.11
-      Architectures:
-      - x86_64
-      Layers:
-      - !Ref MyLayer
-      - !Ref LibLayer
-      Events:
-        Forum:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /undo-react
-            Method: post
+Parameters:
+  MongoDBId:
+    Type: String
+  MongoDBPwd:
+    Type: String
+  Env:
+    Type: String
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   MyLayer:
     Description: "Local Packages Layer"
     Value: !Ref MyLayer
@@ -155,64 +188,63 @@ Outputs:
     Value: !Ref LibLayer
     Export:
       Name: !Sub '${AWS::StackName}-LibLayer'
-
-
-  ForumApi:
-    Description: API Gateway endpoint URL for Prod stage for Forum function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/forum/"
-  ForumFunction:
-    Description: Forum Lambda Function ARN
-    Value: !GetAtt ForumFunction.Arn
-  ForumFunctionIamRole:
-    Description: Implicit IAM Role created for Forum function
-    Value: !GetAtt ForumFunctionRole.Arn
  
-  PostCreateApi:
-    Description: API Gateway endpoint URL for Prod stage for Post Create function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/post-create/"
-  PostCreateFunction:
-    Description: Post Create Lambda Function ARN
-    Value: !GetAtt PostCreateFunction.Arn
-  CreateFunctionIamRole:
-    Description: Implicit IAM Role created for Post Create function
-    Value: !GetAtt PostCreateFunctionRole.Arn
+  CreatePostApi:
+    Description: API Gateway endpoint URL for Prod stage for Create Post function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create-post/"
+  CreatePostFunction:
+    Description: Create Post Lambda Function ARN
+    Value: !GetAtt CreatePostFunction.Arn
+  CreatePostFunctionIamRole:
+    Description: Implicit IAM Role created for Create Post function
+    Value: !GetAtt CreatePostFunctionRole.Arn
 
-  ProfileCreateApi:
-    Description: API Gateway endpoint URL for Prod stage for Profile Create Read function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/profile-create/"
-  ProfileCreateFunction:
-    Description: Profile Create Lambda Function ARN
-    Value: !GetAtt ProfileCreateFunction.Arn
-  ProfileCreateFunctionIamRole:
-    Description: Implicit IAM Role created for Profile Create function
-    Value: !GetAtt ProfileCreateFunctionRole.Arn
+  CreateProfileApi:
+    Description: API Gateway endpoint URL for Prod stage for Create Profile function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create-profile/"
+  CreateProfileFunction:
+    Description: Create Profile Lambda Function ARN
+    Value: !GetAtt CreateProfileFunction.Arn
+  CreateProfileFunctionIamRole:
+    Description: Implicit IAM Role created for Create Profile function
+    Value: !GetAtt CreateProfileFunctionRole.Arn
 
-  ProfileReadApi:
-    Description: API Gateway endpoint URL for Prod stage for Profile Read function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/profile-read/"
-  ProfileReadFunction:
-    Description: Profile Read Lambda Function ARN
-    Value: !GetAtt ProfileReadFunction.Arn
-  ProfileReadFunctionIamRole:
-    Description: Implicit IAM Role created for Profile Read function
-    Value: !GetAtt ProfileReadFunctionRole.Arn
+  CreateReactionApi:
+    Description: API Gateway endpoint URL for Prod stage for Create Reaction function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create-reaction/"
+  CreateReactionFunction:
+    Description: Create Reaction Lambda Function ARN
+    Value: !GetAtt CreateReactionFunction.Arn
+  CreateReactionFunctionIamRole:
+    Description: Implicit IAM Role created for Create Reaction function
+    Value: !GetAtt CreateReactionFunctionRole.Arn
+  
+  LoginApi:
+    Description: API Gateway endpoint URL for Prod stage for Login function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/login/"
+  LoginFunction:
+    Description: Login Lambda Function ARN
+    Value: !GetAtt LoginFunction.Arn
+  LoginFunctionIamRole:
+    Description: Implicit IAM Role created for Login function
+    Value: !GetAtt LoginFunctionRole.Arn
+  
+  ReadForumApi:
+    Description: API Gateway endpoint URL for Prod stage for Read Forum function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/read-forum/"
+  ReadForumFunction:
+    Description: Read Forum Lambda Function ARN
+    Value: !GetAtt ReadForumFunction.Arn
+  ForumProfileFunctionIamRole:
+    Description: Implicit IAM Role created for Read Forum function
+    Value: !GetAtt ReadForumFunctionRole.Arn
 
-  ReactApi:
-    Description: API Gateway endpoint URL for Prod stage for React function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/react/"
-  ReactFunction:
-    Description: React Lambda Function ARN
-    Value: !GetAtt ReactFunction.Arn
-  ReactFunctionIamRole:
-    Description: Implicit IAM Role created for React function
-    Value: !GetAtt ReactFunctionRole.Arn
-
-  UndoReactApi:
-    Description: API Gateway endpoint URL for Prod stage for Undo React function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/undo-react/"
-  UndoReactFunction:
-    Description: Undo React Lambda Function ARN
-    Value: !GetAtt UndoReactFunction.Arn
-  UndoReactFunctionIamRole:
-    Description: Implicit IAM Role created for Undo React function
-    Value: !GetAtt UndoReactFunctionRole.Arn
+  ReadProfileApi:
+    Description: API Gateway endpoint URL for Prod stage for Read Profile function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/read-profile/"
+  ReadProfileFunction:
+    Description: Read Profile Lambda Function ARN
+    Value: !GetAtt ReadProfileFunction.Arn
+  ReadProfileFunctionIamRole:
+    Description: Implicit IAM Role created for Read Profile function
+    Value: !GetAtt ReadProfileFunctionRole.Arn

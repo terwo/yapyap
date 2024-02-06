@@ -1,18 +1,13 @@
 {
-  "body": "{\"username\": \"John\", \"password\": \"123\"}",
-  "resource": "/profile-create",
-  "path": "/profile-create",
-  "httpMethod": "POST",
+  "resource": "/read-forum",
+  "path": "/read-forum",
+  "httpMethod": "GET",
   "isBase64Encoded": false,
   "queryStringParameters": {
-    "foo": "bar"
+    "user_id": "test_event_id"
   },
-  "pathParameters": {
-    "proxy": "/path/to/resource"
-  },
-  "stageVariables": {
-    "baz": "qux"
-  },
+  "pathParameters": {},
+  "stageVariables": {},
   "headers": {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Encoding": "gzip, deflate, sdch",
@@ -53,9 +48,9 @@
       "userAgent": "Custom User Agent String",
       "user": null
     },
-    "path": "/prod/profile-create",
-    "resourcePath": "/profile-create",
-    "httpMethod": "POST",
+    "path": "/prod/read-forum",
+    "resourcePath": "/read-forum",
+    "httpMethod": "GET",
     "apiId": "1234567890",
     "protocol": "HTTP/1.1"
   }

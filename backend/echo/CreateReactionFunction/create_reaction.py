@@ -1,40 +1,48 @@
 import json
-import os
 
-from mongoDB import react_to_post
+from mongo_db import react_to_post
+from request_validation import (
+    extract_body_from_request,
+    extract_value_from_body
+)
 
 def lambda_handler(event, context):
     """
-    Update the reaction count.   
+    Update the reaction count for a given post.
     """
-     
-    # extract the post_id and reaction for the event[body]
-    event = json.loads(event["body"]) if "body" in event else event 
-    if (post_id := event.get("post_id")) is None:
+
+    # extract user_id and journal entry from event[body]    
+    event: dict | None = extract_body_from_request(event)
+    
+    if event is None:
         return {
             "statusCode": 400,
             "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"message": f"A post_id must be included {event}"})
-        }
-    if (user_id := event.get("user_id")) is None:
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"message": f"A user_id must be included {event}"})
-        }
-    if (reaction := event.get("reaction")) is None:
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"message": f"A reaction must be included {event}"})
-        }
- 
-    # update the Post object reaction field
-    result = react_to_post(os.environ.get("ATLAS_URI"), 
-                           post_id, 
-                           user_id, 
-                           reaction,
-                           increment=False)
+            "body": json.dumps(
+                {
+                    "message": "Invalid request body! Request must have a body"
+                                + " with the user_id, post_id and reaction."
+                }
+            )
+        }   
+
+    # authenticate the body
+    status, user_id = extract_value_from_body(event, "user_id")
+    if not status:
+        return user_id
+    
+    status, post_id = extract_value_from_body(event, "post_id")
+    if not status:
+        return post_id
+    
+    status, reaction = extract_value_from_body(event, "reaction")
+    if not status:
+        return reaction
+    
+    #TODO update the database
+    # result = react_to_post(post_id, user_id, reaction)
+    
+    result = 0 #TODO remove before deployment
     
     match result:
         case 0:

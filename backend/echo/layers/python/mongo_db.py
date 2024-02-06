@@ -1,6 +1,7 @@
 from bson.objectid import ObjectId
-import random
 from datetime import datetime, timedelta, timezone
+import os
+import random
 
 from pymongo import MongoClient
 
@@ -9,8 +10,10 @@ AVATARS = ["penguin", "duck", "pig", "bunny"]
 REACTIONS = ["heart", "high-five"]
 
 
-
-def get_client(atlas_uri: str) -> MongoClient:
+def get_client() -> MongoClient:
+    mongo_usr = os.environ.get("MONGO_DB_ID")
+    mongo_pwd = os.environ.get("MONGO_DB_PWD")
+    atlas_uri = f"mongodb+srv://{mongo_usr}:{mongo_pwd}@echodev.xuwka1h.mongodb.net/?retryWrites=true&w=majority"
     return MongoClient(host=atlas_uri)
 
 
@@ -22,19 +25,18 @@ def find_user_by_user_id(atlas_uri: str, user_id: str):
     return result if isinstance(result, dict) else False
  
 
-def add_user(atlas_uri: str, username: str, password:str) -> str | int:
+def add_user(username: str, password:str) -> str | int:
     """
     Add a user to the database.
 
     Args:
-        atlas_uri (str): URI to the datebase.
         username (str): Unique username of the user.
         password (str): Password for the user.
 
     Returns:
         bool | None: True if inserted, False if not. None if the username already exists.
     """
-    client = get_client(atlas_uri)
+    client = get_client()
     users = client.EchoDev.users
 
     if users.find_one({"username": username}) is not None:
@@ -50,19 +52,18 @@ def add_user(atlas_uri: str, username: str, password:str) -> str | int:
     return str(result.inserted_id) if result.inserted_id else -2       
 
 
-def user_profile(atlas_uri: str, username: str, password:str) -> str | bool:
+def user_profile(username: str, password:str) -> str | bool:
     """
     Get the user profile
 
     Args:
-        atlas_uri (str): URI to the datebase.
         username (str): Unique name of the user.
         password (str): Password for the user.
 
     Returns:
         str | bool: user object if log in was successful, False otherwise.
     """
-    client = get_client(atlas_uri)
+    client = get_client()
     users = client.EchoDev.users
 
     if (user := users.find_one({"username": username})) is None:
@@ -76,7 +77,7 @@ def user_profile(atlas_uri: str, username: str, password:str) -> str | bool:
     return user
 
 
-def read_all_posts(atlas_uri: str) -> list[dict]:
+def read_all_posts() -> list[dict]:
     """
     Get all the posts from the database.
 
@@ -86,7 +87,7 @@ def read_all_posts(atlas_uri: str) -> list[dict]:
     Returns:
         list[dict] | None: A list of dictionaries containing a post entry. None otherwise.
     """
-    client = get_client(atlas_uri)
+    client = get_client()
     db = client.EchoDev
     
     posts = list(db.posts.find().sort({"last_saved_date": 1}))
@@ -102,7 +103,7 @@ def read_all_posts(atlas_uri: str) -> list[dict]:
     return posts
 
 
-def posted_today(atlas_uri: str, user_id: str) -> bool:
+def posted_today(user_id: str) -> bool:
     """
     Check if the user made a post today.
 
@@ -113,7 +114,7 @@ def posted_today(atlas_uri: str, user_id: str) -> bool:
     Returns:
         bool: True if the user made a post today. False otherwise.
     """
-    client = get_client(atlas_uri)
+    client = get_client()
     db = client.EchoDev    
     
     result = db.posts.find_one(
@@ -133,12 +134,12 @@ def posted_today(atlas_uri: str, user_id: str) -> bool:
     return None
 
 
-def create_post(atlas_uri: str, user_id: str, journal_entry: str):
-    client = get_client(atlas_uri)
+def create_post(user_id: str, journal_entry: str):
+    client = get_client()
     posts = client.EchoDev.posts
     users = client.EchoDev.users
     
-    user = find_user_by_user_id(atlas_uri, user_id)
+    user = find_user_by_user_id(user_id)
     
     if not isinstance(user, dict):
         return None
@@ -174,11 +175,11 @@ def create_post(atlas_uri: str, user_id: str, journal_entry: str):
     return sentimental_value
 
 
-def react_to_post(atlas_uri: str, post_id: str, user_id: str, reaction: str, increment: bool = True):    
+def react_to_post(post_id: str, user_id: str, reaction: str, increment: bool = True):    
     if reaction not in REACTIONS:
         return -1
     
-    client = get_client(atlas_uri)
+    client = get_client()
     posts = client.EchoDev.posts
     
     post_result = posts.find_one({"_id": ObjectId(post_id)})
@@ -186,7 +187,7 @@ def react_to_post(atlas_uri: str, post_id: str, user_id: str, reaction: str, inc
     if not isinstance(post_result, dict):
         return -2
     
-    if not find_user_by_user_id(atlas_uri, user_id):
+    if not find_user_by_user_id(user_id):
         return -3
     
     # check if the user has already reacted to this
