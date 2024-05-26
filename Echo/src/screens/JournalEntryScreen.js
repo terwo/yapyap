@@ -1,70 +1,54 @@
-import * as React from "react";
+// src/screens/JournalEntryScreen.js
+import React, { useState } from "react";
 import {
   Pressable,
-  FlatList,
-  ScrollView,
   View,
   StyleSheet,
   Image,
   Text,
-  Button,
   TextInput,
   TouchableOpacity,
-  TouchableWithoutFeedback,
-  Linking,
-  AccessibilityInfo
 } from "react-native";
+import back from "../../assets/images/journalentryscreen/back.png";
 
-import back from '../../assets/images/journalentryscreen/back.png';
-
-// const month = getMonth()
-const date = new Date().toDateString()
+const formatDate = (date) => {
+  const options = { month: "short", day: "numeric" };
+  return date.toLocaleDateString("en-US", options).toUpperCase();
+};
 
 const JournalEntryScreen = ({ navigation }) => {
+  const [value, onChangeText] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
+  const date = formatDate(new Date());
 
   const goBack = () => {
-    navigation.navigate('Today')
-  }
+    navigation.navigate("Today");
+  };
 
   const callResults = () => {
-    navigation.navigate('Loading')
-  }
+    navigation.navigate("Loading");
+  };
 
-  // NEED TO SAVE THE TEXT SUBMITTED AND SEND IT TO AI AND RESULTS!!
-  const [value, onChangeText] = React.useState('YAP AWAY!!!');
+  const handleFocus = () => {
+    setIsFocused(true);
+    if (value === "Start typing...") {
+      onChangeText("");
+    }
+  };
 
-  // const callResults = async () => {
-  //   try {
-  //     const response = await fetch('https://b18hhn83c8.execute-api.us-west-2.amazonaws.com/Prod/post-create', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ journal_entry: value, user_id: '65ac855974d67649a3ab6993' }),
-  //     });
-  //     const data = await response.json();
-  //     console.log('Response:', data);
-  //     if (!response.ok) {
-  //       console.log('Response:', response.status);
-  //       throw new Error('Network response was not ok');
-  //     }
-  //     // Handle successful response, then navigate
-  //     navigation.navigate('Loading');
-  //   } catch (error) {
-  //     console.error('Error posting journal entry:', error);
-  //   }
-  // };
+  const handleBlur = () => {
+    if (value === "") {
+      onChangeText("Start typing...");
+      setIsFocused(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-
       <Pressable onPress={goBack}>
-        <Image
-          resizeMode="contain"
-          source={back}
-          style={styles.back}
-        />
+        <Image resizeMode="contain" source={back} style={styles.back} />
       </Pressable>
       <View style={styles.header}>
-
         <Text style={styles.title}>New Entry</Text>
       </View>
       <Text style={styles.date}>{date}</Text>
@@ -75,23 +59,23 @@ const JournalEntryScreen = ({ navigation }) => {
           multiline
           numberOfLines={14}
           maxLength={300}
-          // placeholderTextColor={black}
-          onChangeText={text => onChangeText(text)}
+          onChangeText={(text) => onChangeText(text)}
           value={value}
           style={styles.textYap}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          placeholder={isFocused ? "" : "Start typing..."}
+          placeholderTextColor="#A9A9A9"
         />
       </View>
       <TouchableOpacity onPress={callResults}>
         <View style={styles.analyzeButton}>
-
           <Text style={styles.buttonText}>Next</Text>
-
         </View>
       </TouchableOpacity>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -102,46 +86,29 @@ const styles = StyleSheet.create({
   },
   header: {
     justifyContent: "center",
-    flexDirection: 'row',
-
+    flexDirection: "row",
   },
   back: {
-    position: 'absolute',
+    position: "absolute",
     left: -20,
     top: 2,
-
   },
   title: {
     alignSelf: "center",
-    // alignItems: "center",
-    // flexDirection: 'row',
-    // position: "absolute",
     color: "black",
     fontSize: 30,
-    fontWeight: "bold",
     marginTop: -8,
-    // lineHeight: 122,
-    //   position: "absolute",
-
-    //   textAlign: "center",
-    //   alignSelf: "center",
-    //   flexGrow: 1,
-    //   whiteSpace: "nowrap",
-    //   margin: "auto 0",
-    //   font: "700 30px/123% Nunito, sans-serif ",
+    fontFamily: "NunitoBold",
   },
   date: {
     color: "black",
     textAlign: "center",
-    marginTop: 90,
-    marginBottom: 60,
-    fontSize: 22,
-    fontWeight: "bold",
-    //   font: "600 18px/156% Nunito, sans-serif ",
+    marginTop: 30,
+    fontSize: 20,
+    fontFamily: "NunitoMed",
   },
   question: {
     marginBottom: 100,
-    //   font: "500 25px/112% Nunito, sans-serif ",
   },
   questionText: {
     color: "black",
@@ -149,18 +116,18 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     alignItems: "center",
     textAlign: "center",
-    padding: 20,
-    fontSize: 16,
-    //   fontFamily: "Nunito, sans-serif",
+    marginBottom: 140,
+    fontSize: 24,
+    fontFamily: "NunitoMed",
   },
   textYap: {
-    //   color: "black",
-    textAlignVertical: 'top',
+    textAlignVertical: "top",
     borderRadius: 20,
     backgroundColor: "#F8F8F8",
     paddingTop: 20,
     padding: 20,
     fontSize: 16,
+    fontFamily: "Nunito",
   },
   analyzeButton: {
     color: "black",
@@ -172,12 +139,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 12,
     paddingBottom: 12,
-    fontSize: 22,
-    //   fontFamily: "Nunito, sans-serif",
   },
   buttonText: {
     fontSize: 18,
-  }
+    fontFamily: "NunitoMed",
+  },
 });
 
 export default JournalEntryScreen;
