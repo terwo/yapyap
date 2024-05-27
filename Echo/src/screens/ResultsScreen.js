@@ -39,7 +39,7 @@ const ResultsScreen = ({ route, navigation }) => {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.header}>Sounds like you’re...</Text>
+        <Text style={styles.header}>Sounds like you’re feeling...</Text>
       </View>
       <Image resizeMode="contain" source={imageEmotion} style={styles.image} />
       <View>
@@ -49,7 +49,7 @@ const ResultsScreen = ({ route, navigation }) => {
         <Text style={styles.quip}>{textEmotion}</Text>
       </View>
       <View style={styles.details}>
-        <Text>
+        <Text style={styles.detailsText}>
           Going to my first 24hr hackathon today! excited to meet people and
           have a good time
         </Text>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
     alignSelf: "center",
-    fontFamily: "NunitoBold",
+    fontFamily: "NunitoMed",
     fontSize: 28,
   },
   info: {
@@ -94,11 +94,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 19,
     width: 297,
-    fontFamily: "Nunito",
-    fontSize: 16,
   },
   quip: {
     textAlign: "center",
+    fontFamily: "Nunito",
+    fontSize: 16,
   },
   details: {
     color: "black",
@@ -107,10 +107,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F8F8F8",
     alignSelf: "center",
     marginTop: 48,
-    marginBottom: 120,
+    marginBottom: 100,
     width: "100%",
     maxWidth: 337,
     padding: 20,
+  },
+  detailsText: {
     fontFamily: "Nunito",
     fontSize: 16,
   },
@@ -125,8 +127,8 @@ const styles = StyleSheet.create({
     width: 292.7,
   },
   buttonText: {
-    fontSize: 18,
-    fontFamily: "NunitoBold",
+    fontSize: 20,
+    fontFamily: "Nunito",
   },
 });
 

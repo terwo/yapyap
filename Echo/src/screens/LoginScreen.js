@@ -15,17 +15,7 @@ import login from "../../assets/images/loginscreen/login.png";
 const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [fontsLoaded] = useFonts({
-    Nunito: require("../../assets/fonts/Nunito-Regular.ttf"),
-    NunitoMed: require("../../assets/fonts/Nunito-Medium.ttf"),
-    NunitoBold: require("../../assets/fonts/Nunito-Bold.ttf"),
-  });
-
   const { setUser } = useUser();
-
-  if (!fontsLoaded) {
-    return null; // Render a loading screen or fallback UI
-  }
 
   const loginBut = () => {
     navigation.navigate("Forum");

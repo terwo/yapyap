@@ -4,34 +4,55 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
   TouchableWithoutFeedback,
   Animated,
 } from "react-native";
+import login from "../../assets/images/loginscreen/login.png";
 
 const SplashScreen = ({ navigation }) => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-
-  const handlePress = () => {
-    Animated.timing(scaleAnim, {
-      toValue: 0.6,
-      duration: 500,
-      useNativeDriver: true,
-    }).start(() => {
-      navigation.navigate("Login");
-    });
-  };
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial opacity value of 0
 
   useEffect(() => {
-    // Optionally, you can add some initial animation when the screen loads
-  }, []);
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, [fadeAnim]);
+
+  const handlePress = () => {
+    navigation.navigate("Login");
+  };
 
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.container}>
-        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-          <Text style={styles.logoText}>yapyap</Text>
-        </Animated.View>
-        <Text style={styles.continueText}>Tap anywhere to continue</Text>
+        <View style={styles.animatedContainer}>
+          <Image resizeMode="contain" source={login} style={styles.logo} />
+          <View style={styles.header}>
+            <Text style={styles.headerText}>yapyap</Text>
+          </View>
+        </View>
+        <View style={styles.subtitleContainer}>
+          <Text style={styles.subtitleText}>
+            share freely, acknowledge kindly, encourage warmly
+          </Text>
+        </View>
+        <View style={styles.noteContainer}>
+          <Animated.Text style={[styles.noteText, { opacity: fadeAnim }]}>
+            Tap anywhere to continue
+          </Animated.Text>
+        </View>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -39,19 +60,54 @@ const SplashScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: "#FFF",
+    width: "100%",
+    height: "100%",
+    padding: 50,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFF",
   },
-  logoText: {
-    fontSize: 48,
+  animatedContainer: {
+    alignItems: "center",
+    transform: [{ scale: 1.25 }], // Scale the container by 25%
+  },
+  logo: {
+    overflow: "hidden",
+    alignSelf: "center",
+    position: "relative",
+    marginTop: 60,
+    width: 165,
+    maxWidth: "100%",
+    aspectRatio: 0.96,
+  },
+  header: {
+    textAlign: "center",
+    alignSelf: "center",
+    marginTop: 20,
+    marginBottom: 80,
+  },
+  headerText: {
+    fontSize: 50, // 40 * 1.25
     fontFamily: "NunitoBold",
   },
-  continueText: {
+  subtitleContainer: {
     marginTop: 20,
+    width: 257,
+    alignSelf: "center",
+    marginBottom: 40,
+  },
+  subtitleText: {
+    fontSize: 18,
+    fontFamily: "Nunito",
+    textAlign: "center",
+  },
+  noteContainer: {
+    marginTop: 40,
+  },
+  noteText: {
     fontSize: 16,
     fontFamily: "Nunito",
+    textAlign: "center",
   },
 });
 
