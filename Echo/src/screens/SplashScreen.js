@@ -85,9 +85,11 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
     marginBottom: 80,
+    width: 257,
   },
   headerText: {
-    fontSize: 50, // 40 * 1.25
+    fontSize: 50,
+    textAlign: "center",
     fontFamily: "NunitoBold",
   },
   subtitleContainer: {
