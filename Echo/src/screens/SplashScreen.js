@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 20,
     marginBottom: 80,
-    width: 257,
+    width: 260,
   },
   headerText: {
     fontSize: 50,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   },
   subtitleContainer: {
     marginTop: 20,
-    width: 257,
+    width: 260,
     alignSelf: "center",
     marginBottom: 40,
   },
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
   },
   noteContainer: {
     marginTop: 40,
+    width: 260,
   },
   noteText: {
     fontSize: 16,
