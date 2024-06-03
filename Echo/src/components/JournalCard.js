@@ -63,7 +63,17 @@ const JournalCard = ({ entry, handleEmojiPress }) => {
 const styles = StyleSheet.create({
   cardContainer: {
     borderRadius: 10,
-    // Add other styling as needed
+    backgroundColor: "#F8F8F8",
+
+    // this is all just to remove stupid default card properties
+
+    borderWidth: 0,
+    borderColor: "transparent",
+    shadowColor: "transparent",
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
   },
   cardHeader: {
     flexDirection: "row",
@@ -80,10 +90,9 @@ const styles = StyleSheet.create({
   },
   imageDescription: {
     fontSize: 16,
-    fontWeight: "bold",
     marginVertical: 10,
     textAlign: "center",
-    fontFamily: "NunitoBold", // Ensure the font is loaded in the main app
+    fontFamily: "Nunito", // Ensure the font is loaded in the main app
   },
   contentText: {
     marginVertical: 10,

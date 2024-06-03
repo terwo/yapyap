@@ -12,10 +12,10 @@ import JournalCard from "../components/JournalCard";
 import { useUser } from "../context/UserContext.js"; // Adjust this path to the correct location
 
 import profileAvatar from "../../assets/images/avatars/bunny.png"; // Use the correct avatar image for the user
+import settings from "../../assets/images/profilescreen/settings.svg";
 
 const ProfileScreen = ({ navigation }) => {
   const profile = {
-    username: "JohnDoe",
     avatar: "bunny",
   };
 
@@ -79,18 +79,15 @@ const ProfileScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
       <View>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton} onPress={goBack}>
-            <Ionicons name="chevron-back" size={24} color="white" />
-          </TouchableOpacity>
-          <View style={styles.profileContainer}>
-            <Image
-              resizeMode="contain"
-              source={profileAvatar}
-              style={styles.avatar}
-            />
+        <View style={styles.profileUpper}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={goBack}>
+              <Ionicons name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
             <Text style={styles.headerText}>Profile</Text>
-            <View style={styles.spacer} />
+            <TouchableOpacity>
+              <Image resizeMode="contain" source={settings} />
+            </TouchableOpacity>
           </View>
           <Image
             resizeMode="contain"
@@ -101,7 +98,6 @@ const ProfileScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.contentContainer}>
-        <Text style={styles.username}>{profile.username}</Text>
         {journalEntries.map((entry, index) => (
           <JournalCard
             key={index}
@@ -120,7 +116,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  header: {
+  profileUpper: {
     paddingTop: 40,
     width: "100%",
     backgroundColor: "#F28D62",
@@ -130,18 +126,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     position: "relative",
   },
-  backButton: {
-    position: "absolute",
-    top: 40,
-    left: 15,
-  },
-  profileContainer: {
-    justifyContent: "space-between",
+  header: {
     alignItems: "center",
     display: "flex",
+    alignContent: "center",
     flexDirection: "row",
-    width: "100%",
+    position: "absolute",
+    alignSelf: "center",
+    gap: 100,
   },
+  // profileContainer: {
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  //   display: "flex",
+  //   flexDirection: "row",
+  //   width: "100%",
+  // },
   avatar: {
     width: 50,
     height: 50,
@@ -149,8 +149,7 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 30,
-    fontWeight: "bold",
-    color: "#FFF",
+    color: "black",
     fontFamily: "NunitoBold",
     flex: 1,
     textAlign: "center",
@@ -172,7 +171,6 @@ const styles = StyleSheet.create({
   },
   username: {
     fontSize: 20,
-    fontWeight: "bold",
     textAlign: "center",
     fontFamily: "NunitoBold",
     marginVertical: 10,
