@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 pytest = "*"
+mock = "*"
+pymongo = "*"
+pytest-mongodb = "*"
 
 [dev-packages]
 

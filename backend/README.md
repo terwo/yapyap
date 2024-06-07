@@ -21,6 +21,7 @@
 * Docker
 
 ## Local Testing
+Ensure Docker is running locally.
 ```
 make unit_tests
 ```

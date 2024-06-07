@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - backend-sam*
+      - backend-sam-deploy*
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
