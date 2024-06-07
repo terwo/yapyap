@@ -1,0 +1,33 @@
+- _id: 507f1f77bcf86cd799439011
+  username: JohnSmith12 
+  password: ABC
+  avatar: duck
+  posts: ["65fd4fcae22f455e39f50e17"]
+  yap_yap_auth_tokens: []
+
+- _id: 507f191e810c19729de860ea
+  username: derek1
+  password: xyz
+  avatar: pig
+  posts: ["65fd51bf9b27cef811390514", "65fd51cd0c20d1065e0bbcdb"]
+  yap_yap_auth_tokens: 
+    - device_id: af7c1fe6-d669-414e-b066-e9733f0de7a8
+      token: 1711187590YAPsLJUV3UYCBLu2fEelsn4kmbxCJy-kzBVSFibNjTB4Yg
+    - device_id: fd4a096f-93f5-4f2a-86c6-69a2d20365ff
+      token: 1711190097YAP3td6WFjoEGQ4M4GCq6El4jUGF24Xf3PhMnjHQGNRRIg
+
+- _id: 65ffcfcd2db694b71dc5afcb
+  username: HarryPotter
+  password: ab12
+  avatar: bunny
+  posts: []
+  yap_yap_auth_tokens: []
+
+- _id: 66634e25472d7181f3000df2
+  username: percy_jackson
+  password: SeaweedBrain
+  avatar: penguin
+  posts: []
+  yap_yap_auth_tokens:
+    - device_id: 0723e7a1-ec12-4cdb-b4d5-6169dba540c6
+      token: 1717784448YAP8a01db5603744166d74caa33e2c4e591
