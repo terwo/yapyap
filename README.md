@@ -21,4 +21,4 @@ This is the winning project of the Community and Connection Track and Best Desig
 # Post-POC
 1. Create a notifications screen
 2. Analyzing a broader range of emotions, because humans are complex
-3. Improve the AI (named 愛) to provide customized responses to journal entries
+3. Improve the AI agent to provide customized responses to journal entries
