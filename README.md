@@ -26,12 +26,12 @@ This is the winning project of the Community and Connection Track and Best Desig
 
 ## Screenshots of UI
 <div align="center">  
-
-<img src="https://github.com/terwo/yapyap/assets/105677497/38992970-70fa-421f-aba7-d1a4b9a8c27a" width="230"/>  
-<img src="https://github.com/terwo/yapyap/assets/105677497/101a3a18-4648-4dc8-91b7-fbc59a824685" width="230"/>  
-<img src="https://github.com/terwo/yapyap/assets/105677497/dd388b7a-9022-45e9-a070-1e8335e26435" width="230"/>  
-<img src="https://github.com/terwo/yapyap/assets/105677497/2af0a505-09b8-49c2-af3b-7b84c5d71611" width="230"/>  
-
+  <div style="display: flex; justify-content: center; gap: 10px;">  
+    <img src="https://github.com/terwo/yapyap/assets/105677497/38992970-70fa-421f-aba7-d1a4b9a8c27a" style="width: 22%; flex-shrink: 1; min-width: 150px;"/>  
+    <img src="https://github.com/terwo/yapyap/assets/105677497/101a3a18-4648-4dc8-91b7-fbc59a824685" style="width: 22%; flex-shrink: 1; min-width: 150px;"/>  
+    <img src="https://github.com/terwo/yapyap/assets/105677497/dd388b7a-9022-45e9-a070-1e8335e26435" style="width: 22%; flex-shrink: 1; min-width: 150px;"/>  
+    <img src="https://github.com/terwo/yapyap/assets/105677497/2af0a505-09b8-49c2-af3b-7b84c5d71611" style="width: 22%; flex-shrink: 1; min-width: 150px;"/>  
+  </div>  
 </div>
 
 
